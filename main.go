@@ -9,10 +9,6 @@ import (
 	"github.com/hashicorp/logutils"
 )
 
-var (
-	params Parameters
-)
-
 func init() {
 	filter := &logutils.LevelFilter{
 		Levels:   []logutils.LogLevel{"DEBUG", "INFO", "WARN", "ERROR"},
