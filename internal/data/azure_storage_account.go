@@ -1,28 +1,21 @@
-package main
+package data
 
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"log"
-	"os"
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azidentity"
 	"github.com/Azure/azure-sdk-for-go/sdk/storage/azblob"
 )
 
-var (
-	params Parameters
-)
-
-type Parameters []Parameter
-type Parameter struct {
-	Name  string `json:"name"`
-	Value string `json:"value"`
-	Info  string `json:"info"`
+type AzureStorageAccount struct {
+	StorageAccountName string
+	ContainerName      string
+	Parameters         Parameters
 }
 
-func (p Parameters) read() {
+func (p AzureStorageAccount) Read() error {
 	url := "https://stparampiper.blob.core.windows.net/"
 	ctx := context.Background()
 
@@ -50,20 +43,22 @@ func (p Parameters) read() {
 
 	blobSize := props.ContentLength
 	jsonData := make([]byte, int(*blobSize))
+	log.Println("[DEBUG] Blob size:", blobSize)
 
 	_, err = blobClient.DownloadBuffer(ctx, jsonData, nil)
 	if err != nil {
 		log.Fatalf("Error downloading blob: %v", err)
 	}
 
-	err = json.Unmarshal(jsonData, &p)
+	err = json.Unmarshal(jsonData, &Params)
 	if err != nil {
 		log.Fatalf("Error unmarshalling JSON: %v", err)
 	}
 
-	fmt.Print(p)
+	log.Println("[DEBUG]", Params)
+	return nil
 }
-func (p Parameters) save() {
+func (p AzureStorageAccount) Save() error {
 	url := "https://stparampiper.blob.core.windows.net/"
 	ctx := context.Background()
 
@@ -90,90 +85,13 @@ func (p Parameters) save() {
 	if err != nil {
 		log.Println(err)
 	}
+	return nil
 }
 
-func (p Parameters) String() string {
+func (p AzureStorageAccount) String() string {
 	s := ""
-	for _, parameter := range p {
+	for _, parameter := range p.Parameters {
 		s += parameter.String() + "\n"
 	}
 	return s
-}
-
-func (p Parameter) String() string {
-	return fmt.Sprintf("%s: %s", p.Name, p.Value)
-}
-
-func (p Parameter) add() {
-	jsonBlob, err := os.ReadFile("parampiper.json")
-	if err != nil {
-		log.Println(err)
-	}
-
-	err = json.Unmarshal(jsonBlob, &params)
-	if err != nil {
-		log.Println(err)
-	}
-	if p.ifExists() {
-		fmt.Println("Parameter already exists")
-		return
-	} else {
-		params = append(params, p)
-		JsonData, err := json.MarshalIndent(params, "", "    ")
-		if err != nil {
-			log.Println(err)
-		}
-
-		err = os.WriteFile("parampiper.json", JsonData, 0644)
-		if err != nil {
-			fmt.Println("error:", err)
-		}
-	}
-
-}
-
-func (p Parameter) remove() {
-	jsonBlob, err := os.ReadFile("parampiper.json")
-	if err != nil {
-		log.Println(err)
-	}
-
-	err = json.Unmarshal(jsonBlob, &params)
-	if err != nil {
-		log.Println(err)
-	}
-
-	for i, param := range params {
-		if param.Name == p.Name {
-			params = append(params[:i], params[i+1:]...)
-		}
-	}
-	JsonData, err := json.MarshalIndent(params, "", "    ")
-	if err != nil {
-		log.Println(err)
-	}
-
-	err = os.WriteFile("parampiper.json", JsonData, 0644)
-	if err != nil {
-		fmt.Println("error:", err)
-	}
-}
-
-func (p Parameter) ifExists() bool {
-	jsonBlob, err := os.ReadFile("parampiper.json")
-	if err != nil {
-		log.Println(err)
-	}
-
-	err = json.Unmarshal(jsonBlob, &params)
-	if err != nil {
-		log.Println(err)
-	}
-
-	for _, param := range params {
-		if param.Name == p.Name {
-			return true
-		}
-	}
-	return false
 }

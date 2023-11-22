@@ -1,0 +1,27 @@
+[
+    {
+        "name": "VNET22",
+        "value": "/subscriptions/3c110410-a29d-4402-96c4-f82b0feaa895/resourceGroups/onkube/providers/Microsoft.Network/virtualNetworks/test-vnet",
+        "info": ""
+    },
+    {
+        "name": "SA_DEV_CONT",
+        "value": "/subscriptions/3c110410-a29d-4402-96c4-f82b0feaa895/resourceGroups/parampiper/providers/Microsoft.Storage/storageAccounts/stparampiper",
+        "info": ""
+    },
+    {
+        "name": "SA_DEV_CONT33",
+        "value": "/subscriptions/3c110410-a29d-4402-96c4-f82b0feaa895/resourceGroups/parampiper/providers/Microsoft.Storage/storageAccounts/stparampiper",
+        "info": ""
+    },
+    {
+        "name": "testName22",
+        "value": "testValue",
+        "info": ""
+    },
+    {
+        "name": "testName567",
+        "value": "testValue",
+        "info": ""
+    }
+]
