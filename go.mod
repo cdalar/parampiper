@@ -1,6 +1,6 @@
 module github.com/cdalar/parampiper
 
-go 1.21.4
+go 1.23
 
 require (
 	github.com/Azure/azure-sdk-for-go/sdk/azidentity v1.4.0
