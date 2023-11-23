@@ -38,6 +38,9 @@ var addCmd = &cobra.Command{
 		parameters.Add(p)
 
 		log.Println("[DEBUG] Parameters: ", parameters)
-		provider.Save(parameters)
+		err = provider.Save(parameters)
+		if err != nil {
+			log.Println(err)
+		}
 	},
 }
