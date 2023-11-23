@@ -12,11 +12,12 @@ import (
 type AzureStorageAccount struct {
 	StorageAccountName string
 	ContainerName      string
+	FileName           string
 	Parameters         Parameters
 }
 
-func (p AzureStorageAccount) Read() error {
-	url := "https://stparampiper.blob.core.windows.net/"
+func (p AzureStorageAccount) Read() (Parameters, error) {
+	url := "https://" + p.StorageAccountName + ".blob.core.windows.net/"
 	ctx := context.Background()
 
 	credential, err := azidentity.NewDefaultAzureCredential(nil)
@@ -29,12 +30,8 @@ func (p AzureStorageAccount) Read() error {
 		log.Fatalf("Error creating client: %v", err)
 	}
 
-	// Assuming you have a container and blob name
-	containerName := "sqlite"
-	blobName := "parampiper.json"
-
-	containerClient := client.ServiceClient().NewContainerClient(containerName)
-	blobClient := containerClient.NewBlobClient(blobName)
+	containerClient := client.ServiceClient().NewContainerClient(p.ContainerName)
+	blobClient := containerClient.NewBlobClient(p.FileName)
 
 	props, err := blobClient.GetProperties(ctx, nil)
 	if err != nil {
@@ -50,16 +47,17 @@ func (p AzureStorageAccount) Read() error {
 		log.Fatalf("Error downloading blob: %v", err)
 	}
 
-	err = json.Unmarshal(jsonData, &Params)
+	err = json.Unmarshal(jsonData, &p.Parameters)
 	if err != nil {
 		log.Fatalf("Error unmarshalling JSON: %v", err)
 	}
 
-	log.Println("[DEBUG]", Params)
-	return nil
+	log.Println("[DEBUG]", p.Parameters)
+	return p.Parameters, nil
 }
-func (p AzureStorageAccount) Save() error {
-	url := "https://stparampiper.blob.core.windows.net/"
+
+func (p AzureStorageAccount) Save(params Parameters) error {
+	url := "https://" + p.StorageAccountName + ".blob.core.windows.net/"
 	ctx := context.Background()
 
 	credential, err := azidentity.NewDefaultAzureCredential(nil)
@@ -72,16 +70,12 @@ func (p AzureStorageAccount) Save() error {
 		log.Println(err)
 	}
 
-	// data := []byte("\nHello, world! This is a blob.\n")
-	// blobName := "sample-blob"
-	jsonData, err := json.MarshalIndent(p, "", "    ")
+	jsonData, err := json.MarshalIndent(params, "", "    ")
 	if err != nil {
 		log.Println(err)
 	}
 
-	// Upload to data to blob storage
-	// fmt.Printf("Uploading a blob named %s\n", blobName)
-	_, err = client.UploadBuffer(ctx, "sqlite", "parampiper.json", jsonData, &azblob.UploadBufferOptions{})
+	_, err = client.UploadBuffer(ctx, p.ContainerName, p.FileName, jsonData, &azblob.UploadBufferOptions{})
 	if err != nil {
 		log.Println(err)
 	}

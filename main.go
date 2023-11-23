@@ -19,7 +19,7 @@ func init() {
 		filter.MinLevel = logutils.LogLevel(os.Getenv("PP_LOG"))
 		log.SetFlags(log.Lshortfile)
 	} else {
-		filter.MinLevel = logutils.LogLevel("WARN")
+		filter.MinLevel = logutils.LogLevel("DEBUG")
 		log.SetFlags(log.Lshortfile)
 	}
 	log.SetOutput(filter)
@@ -30,16 +30,4 @@ func main() {
 	if err != nil {
 		log.Println(err)
 	}
-
-	// params.read()
-	// jsonBlob, err := os.ReadFile("parampiper.json")
-	// handleError(err)
-	// err = json.Unmarshal(jsonBlob, &params)
-	// if err != nil {
-	// 	fmt.Println("error:", err)
-	// }
-	// fmt.Print(params)
-	// Parameter{Name: "testName2233", Value: "testValue"}.add()
-	// Parameter{Name: "testName"}.remove()
-	// params.save()
 }
