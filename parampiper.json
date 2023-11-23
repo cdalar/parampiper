@@ -1,0 +1,27 @@
+[
+    {
+        "name": "VNET22",
+        "value": "virtualNetworks/test-vnet",
+        "info": ""
+    },
+    {
+        "name": "SA_DEV_CONT",
+        "value": "/stparampiper",
+        "info": ""
+    },
+    {
+        "name": "SA_DEV_CONT33",
+        "value": "/subscriptions/xxx/resourceGroups/",
+        "info": ""
+    },
+    {
+        "name": "testName22",
+        "value": "testValue",
+        "info": ""
+    },
+    {
+        "name": "testName567",
+        "value": "testValue",
+        "info": ""
+    }
+]
