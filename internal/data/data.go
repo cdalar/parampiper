@@ -42,7 +42,13 @@ func (p *Parameter) String() string {
 }
 
 func (p *Parameters) Add(prm Parameter) {
-	*p = append(*p, prm)
+	isExists, paramPos := p.IfExists(prm)
+	if isExists {
+		(*p)[paramPos] = prm
+		return
+	} else {
+		*p = append(*p, prm)
+	}
 }
 
 func (p *Parameters) Remove(prm Parameter) {
@@ -54,11 +60,11 @@ func (p *Parameters) Remove(prm Parameter) {
 	}
 }
 
-// func (p Parameter) IfExists() bool {
-// 	for _, param := range Params {
-// 		if param.Name == p.Name {
-// 			return true
-// 		}
-// 	}
-// 	return false
-// }
+func (p *Parameters) IfExists(prm Parameter) (bool, int) {
+	for i, param := range *p {
+		if param.Name == prm.Name {
+			return true, i
+		}
+	}
+	return false, -1
+}

@@ -43,7 +43,7 @@ var getCmd = &cobra.Command{
 				log.Println("[DEBUG] Value: ", p.Value)
 				switch outputType {
 				case "raw":
-					fmt.Print(p.Value)
+					fmt.Print(p.Value, "\n")
 				case "json":
 					fmt.Print(p.ToJSON())
 				case "yaml":
@@ -52,7 +52,7 @@ var getCmd = &cobra.Command{
 					tmpl := "NAME\tVALUE\tINFO\n{{.Name}}\t{{.Value}}\t{{.Info}}\n"
 					TabWriter(p, tmpl)
 				default:
-					fmt.Print(p.Value)
+					fmt.Print(p.Value, "\n")
 				}
 			}
 		}
