@@ -12,34 +12,13 @@ type DataProviderInterface interface {
 	Read() (Parameters, error)
 	Save(Parameters) error
 }
-
-type Parameters []Parameter
-
 type Parameter struct {
 	Name  string `json:"name"`
 	Value string `json:"value"`
 	Info  string `json:"info"`
 }
 
-func (p *Parameter) ToJSON() string {
-	jsonData, err := json.MarshalIndent(p, "", "    ")
-	if err != nil {
-		log.Println(err)
-	}
-	return string(jsonData)
-}
-
-func (p *Parameter) ToYAML() string {
-	yamlData, err := yaml.Marshal(p)
-	if err != nil {
-		log.Println(err)
-	}
-	return string(yamlData)
-}
-
-func (p *Parameter) String() string {
-	return fmt.Sprintf("%s: %s", p.Name, p.Value)
-}
+type Parameters []Parameter
 
 func (p *Parameters) Add(prm Parameter) {
 	isExists, paramPos := p.IfExists(prm)
@@ -67,4 +46,24 @@ func (p *Parameters) IfExists(prm Parameter) (bool, int) {
 		}
 	}
 	return false, -1
+}
+
+func (p *Parameter) ToJSON() string {
+	jsonData, err := json.MarshalIndent(p, "", "    ")
+	if err != nil {
+		log.Println(err)
+	}
+	return string(jsonData)
+}
+
+func (p *Parameter) ToYAML() string {
+	yamlData, err := yaml.Marshal(p)
+	if err != nil {
+		log.Println(err)
+	}
+	return string(yamlData)
+}
+
+func (p *Parameter) String() string {
+	return fmt.Sprintf("%s: %s (%s)", p.Name, p.Value, p.Info)
 }
