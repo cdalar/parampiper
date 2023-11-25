@@ -5,7 +5,7 @@ before:
     - go mod tidy
 
 builds:
-  - binary: pp
+  - binary: parampiper
     id: pp-linux
     env:
       - CGO_ENABLED=0
@@ -17,7 +17,7 @@ builds:
     ldflags:
       - -w -s -X 'github.com/cdalar/parampiper/cmd.Version=v{{.Version}}-{{.ShortCommit}}'
 
-  - binary: pp
+  - binary: parampiper
     id: pp
     env:
       - CGO_ENABLED=0
