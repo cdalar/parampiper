@@ -12,8 +12,7 @@ import (
 type AzureStorageAccount struct {
 	StorageAccountName string
 	ContainerName      string
-	FileName           string
-	Parameters         Parameters
+	BlobName           string
 }
 
 func (p AzureStorageAccount) Read() (Parameters, error) {
@@ -31,8 +30,9 @@ func (p AzureStorageAccount) Read() (Parameters, error) {
 	}
 
 	containerClient := client.ServiceClient().NewContainerClient(p.ContainerName)
-	blobClient := containerClient.NewBlobClient(p.FileName)
+	blobClient := containerClient.NewBlobClient(p.BlobName)
 
+	log.Println("[DEBUG]", "SA Name:", p.StorageAccountName, "\nContainer Name:", p.ContainerName, "\nFileName:", p.BlobName)
 	props, err := blobClient.GetProperties(ctx, nil)
 	if err != nil {
 		log.Fatalf("Error getting properties: %v", err)
@@ -47,13 +47,14 @@ func (p AzureStorageAccount) Read() (Parameters, error) {
 		log.Fatalf("Error downloading blob: %v", err)
 	}
 
-	err = json.Unmarshal(jsonData, &p.Parameters)
+	var parameters Parameters
+	err = json.Unmarshal(jsonData, &parameters)
 	if err != nil {
 		log.Fatalf("Error unmarshalling JSON: %v", err)
 	}
 
-	log.Println("[DEBUG]", p.Parameters)
-	return p.Parameters, nil
+	log.Println("[DEBUG]", parameters)
+	return parameters, nil
 }
 
 func (p AzureStorageAccount) Save(params Parameters) error {
@@ -75,7 +76,7 @@ func (p AzureStorageAccount) Save(params Parameters) error {
 		log.Println(err)
 	}
 
-	_, err = client.UploadBuffer(ctx, p.ContainerName, p.FileName, jsonData, &azblob.UploadBufferOptions{})
+	_, err = client.UploadBuffer(ctx, p.ContainerName, p.BlobName, jsonData, &azblob.UploadBufferOptions{})
 	if err != nil {
 		log.Println(err)
 	}
@@ -84,7 +85,12 @@ func (p AzureStorageAccount) Save(params Parameters) error {
 
 func (p AzureStorageAccount) String() string {
 	s := ""
-	for _, parameter := range p.Parameters {
+	parameters, err := p.Read()
+	if err != nil {
+		log.Println(err)
+	}
+
+	for _, parameter := range parameters {
 		s += parameter.String() + "\n"
 	}
 	return s

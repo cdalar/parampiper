@@ -1,28 +1,34 @@
 package data
 
 import (
+	"encoding/json"
 	"fmt"
+	"log"
+
+	"gopkg.in/yaml.v2"
 )
 
 type DataProviderInterface interface {
 	Read() (Parameters, error)
 	Save(Parameters) error
 }
-
-type Parameters []Parameter
-
 type Parameter struct {
 	Name  string `json:"name"`
 	Value string `json:"value"`
 	Info  string `json:"info"`
+	// Time  string `json:"time"`
 }
 
-func (p *Parameter) String() string {
-	return fmt.Sprintf("%s: %s", p.Name, p.Value)
-}
+type Parameters []Parameter
 
 func (p *Parameters) Add(prm Parameter) {
-	*p = append(*p, prm)
+	isExists, paramPos := p.IfExists(prm)
+	if isExists {
+		(*p)[paramPos] = prm
+		return
+	} else {
+		*p = append(*p, prm)
+	}
 }
 
 func (p *Parameters) Remove(prm Parameter) {
@@ -34,11 +40,31 @@ func (p *Parameters) Remove(prm Parameter) {
 	}
 }
 
-// func (p Parameter) IfExists() bool {
-// 	for _, param := range Params {
-// 		if param.Name == p.Name {
-// 			return true
-// 		}
-// 	}
-// 	return false
-// }
+func (p *Parameters) IfExists(prm Parameter) (bool, int) {
+	for i, param := range *p {
+		if param.Name == prm.Name {
+			return true, i
+		}
+	}
+	return false, -1
+}
+
+func (p *Parameter) ToJSON() string {
+	jsonData, err := json.MarshalIndent(p, "", "    ")
+	if err != nil {
+		log.Println(err)
+	}
+	return string(jsonData)
+}
+
+func (p *Parameter) ToYAML() string {
+	yamlData, err := yaml.Marshal(p)
+	if err != nil {
+		log.Println(err)
+	}
+	return string(yamlData)
+}
+
+func (p *Parameter) String() string {
+	return fmt.Sprintf("%s: %s (%s)", p.Name, p.Value, p.Info)
+}

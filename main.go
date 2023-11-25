@@ -19,7 +19,7 @@ func init() {
 		filter.MinLevel = logutils.LogLevel(os.Getenv("PP_LOG"))
 		log.SetFlags(log.Lshortfile)
 	} else {
-		filter.MinLevel = logutils.LogLevel("DEBUG")
+		filter.MinLevel = logutils.LogLevel("WARN")
 		log.SetFlags(log.Lshortfile)
 	}
 	log.SetOutput(filter)

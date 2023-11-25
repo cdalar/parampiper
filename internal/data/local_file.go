@@ -8,8 +8,7 @@ import (
 )
 
 type LocalFile struct {
-	FilePath   string
-	Parameters Parameters
+	FilePath string
 }
 
 func (p LocalFile) Read() (Parameters, error) {
@@ -18,13 +17,13 @@ func (p LocalFile) Read() (Parameters, error) {
 	if err != nil {
 		log.Println(err)
 	}
-
-	err = json.Unmarshal(jsonBlob, &p.Parameters)
+	parameters := Parameters{}
+	err = json.Unmarshal(jsonBlob, &parameters)
 	if err != nil {
 		log.Println(err)
 	}
-	log.Println("[DEBUG]", p.Parameters)
-	return p.Parameters, nil
+	log.Println("[DEBUG]", parameters)
+	return parameters, nil
 }
 
 func (p LocalFile) Save(params Parameters) error {

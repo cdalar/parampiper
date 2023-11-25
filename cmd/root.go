@@ -1,20 +1,23 @@
 package cmd
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"strings"
 
 	"github.com/cdalar/parampiper/internal/data"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 var (
 	rootCmd = &cobra.Command{
 		Use:   "parampiper",
-		Short: "parampiper is a tool to manage parameter cross different pipelines",
+		Short: "parampiper is a tool to manage parameters cross different pipelines",
 	}
-	provider data.DataProviderInterface
+	provider     data.DataProviderInterface
+	providerList = []string{"local_file", "azure_blob"}
 	// dataProvider string
 )
 
@@ -25,21 +28,25 @@ var (
 
 // Execute executes the root command.
 func Execute() error {
+	ReadConfig("parampiper")
 	log.Println("[DEBUG] Args: " + strings.Join(os.Args, ","))
 	dataProvider := os.Getenv("PP_DATA")
 	if dataProvider == "" {
 		dataProvider = "local_file"
+	} else {
+		checkDataProvider()
 	}
 	switch dataProvider {
 	case "local_file":
 		provider = &data.LocalFile{
-			FilePath: "parampiper.json",
+			FilePath: viper.GetString("local_file.filePath"),
 		}
 		log.Println("[DEBUG] Using LocalFile")
-	case "AzureStorageAccount":
+	case "azure_blob":
 		provider = &data.AzureStorageAccount{
-			StorageAccountName: "stparampiper",
-			ContainerName:      "sqlite",
+			StorageAccountName: viper.GetString("azure_blob.StorageAccountName"),
+			ContainerName:      viper.GetString("azure_blob.ContainerName"),
+			BlobName:           viper.GetString("azure_blob.BlobName"),
 		}
 		log.Println("[DEBUG] Using AzureStorageAccount")
 	}
@@ -47,9 +54,13 @@ func Execute() error {
 	return rootCmd.Execute()
 }
 
-func init() {
-	rootCmd.AddCommand(versionCmd)
-	rootCmd.AddCommand(listCmd)
-	rootCmd.AddCommand(addCmd)
-	rootCmd.AddCommand(rmCmd)
+func checkDataProvider() {
+	dataProvider := os.Getenv("PP_DATA")
+	fmt.Println("Using: " + dataProvider)
+	if dataProvider != "" {
+		if !Contains(providerList, dataProvider) {
+			log.Println("Provider (" + dataProvider + ") is not Supported\nPlease use one of the following: " + strings.Join(providerList, ","))
+			os.Exit(1)
+		}
+	}
 }
