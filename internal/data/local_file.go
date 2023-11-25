@@ -11,16 +11,29 @@ type LocalFile struct {
 	FilePath string
 }
 
+func fileExists(filename string) bool {
+	info, err := os.Stat(filename)
+	if os.IsNotExist(err) {
+		return false
+	}
+	return !info.IsDir()
+}
+
 func (p LocalFile) Read() (Parameters, error) {
 	log.Println("[DEBUG] Reading from LocalFile")
-	jsonBlob, err := os.ReadFile(p.FilePath)
-	if err != nil {
-		log.Println(err)
-	}
 	parameters := Parameters{}
-	err = json.Unmarshal(jsonBlob, &parameters)
-	if err != nil {
-		log.Println(err)
+	if fileExists(p.FilePath) {
+		jsonBlob, err := os.ReadFile(p.FilePath)
+		if err != nil {
+			log.Println(err)
+		}
+		err = json.Unmarshal(jsonBlob, &parameters)
+		if err != nil {
+			log.Println(err)
+		}
+	} else {
+		fmt.Println(p.FilePath, "file does not exist")
+		os.Exit(1)
 	}
 	log.Println("[DEBUG]", parameters)
 	return parameters, nil
