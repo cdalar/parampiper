@@ -12,14 +12,11 @@ import (
 func init() {
 	filter := &logutils.LevelFilter{
 		Levels:   []logutils.LogLevel{"DEBUG", "INFO", "WARN", "ERROR"},
-		MinLevel: logutils.LogLevel("DEBUG"),
+		MinLevel: logutils.LogLevel("WARN"),
 		Writer:   os.Stderr,
 	}
 	if os.Getenv("PP_LOG") != "" {
 		filter.MinLevel = logutils.LogLevel(os.Getenv("PP_LOG"))
-		log.SetFlags(log.Lshortfile)
-	} else {
-		filter.MinLevel = logutils.LogLevel("WARN")
 		log.SetFlags(log.Lshortfile)
 	}
 	log.SetOutput(filter)
