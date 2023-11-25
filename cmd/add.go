@@ -14,7 +14,10 @@ var (
 func init() {
 	rootCmd.AddCommand(addCmd)
 	addCmd.Flags().StringVarP(&param.Name, "name", "n", "", "Name of the parameter")
-	addCmd.MarkFlagRequired("name")
+	err := addCmd.MarkFlagRequired("name")
+	if err != nil {
+		log.Println(err)
+	}
 	addCmd.Flags().StringVarP(&param.Value, "value", "v", "", "Value of the parameter")
 	addCmd.Flags().StringVarP(&param.Info, "info", "i", "", "Info of the parameter")
 }

@@ -9,7 +9,10 @@ import (
 
 func init() {
 	rmCmd.Flags().StringVarP(&param.Name, "name", "n", "", "Name of the parameter")
-	rmCmd.MarkFlagRequired("name")
+	err := rmCmd.MarkFlagRequired("name")
+	if err != nil {
+		log.Println(err)
+	}
 	rootCmd.AddCommand(rmCmd)
 }
 
