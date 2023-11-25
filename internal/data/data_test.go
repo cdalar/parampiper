@@ -65,7 +65,7 @@ func TestParameter_ToYAML(t *testing.T) {
 
 	yamlStr := param.ToYAML()
 
-	expectedYAML := "name: param1\nvalue: value1\ninfo: info1\n"
+	expectedYAML := "name: param1\nvalue: value1\ninfo: info1\ntime: \"\"\n"
 	if yamlStr != expectedYAML {
 		t.Errorf("Expected YAML string to be %s, got %s", expectedYAML, yamlStr)
 	}

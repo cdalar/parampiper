@@ -9,6 +9,8 @@ import (
 
 func init() {
 	rmCmd.Flags().StringVarP(&param.Name, "name", "n", "", "Name of the parameter")
+	rmCmd.MarkFlagRequired("name")
+	rootCmd.AddCommand(rmCmd)
 }
 
 var rmCmd = &cobra.Command{

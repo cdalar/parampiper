@@ -10,6 +10,7 @@ import (
 var outputType string
 
 func init() {
+	rootCmd.AddCommand(getCmd)
 	getCmd.Flags().StringVarP(&param.Name, "name", "n", "", "Name of the parameter")
 	// getCmd.MarkFlagRequired("name")
 	getCmd.Flags().StringVarP(&outputType, "output", "o", "", "Output type: raw, json, yaml, table")
