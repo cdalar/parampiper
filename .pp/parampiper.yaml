@@ -1,5 +1,6 @@
+encryption_key: 12345678901234567890123456789012
 local_file:
-  FilePath: parampiper.json
+  FilePath: parampiper.enc.json
 azure_blob:
   StorageAccountName: stparampiper
   ContainerName: sqlite

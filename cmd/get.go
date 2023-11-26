@@ -32,16 +32,32 @@ var getCmd = &cobra.Command{
 			}
 		}
 
-		param.Name = args[0]
 		parameters, err := provider.Read()
 		if err != nil {
 			log.Println(err)
 		}
+		if encryptionAlgo != "none" {
+			log.Println("[DEBUG] Decrypting parameters with ", encryptionAlgo, " algorithm")
+			for i, p := range parameters {
+				decrypted, err := encrypter.Decrypt(p.Value)
+				if err != nil {
+					log.Println(err)
+				}
+				parameters[i].Value = string(decrypted)
+			}
+		}
+
 		log.Println("[DEBUG] Searching for parameter named: ", param.Name)
 		for _, p := range parameters {
 			if p.Name == param.Name {
 				log.Println("[DEBUG] Found parameter: ", p)
 				log.Println("[DEBUG] Value: ", p.Value)
+				cleanData, err := encrypter.Decrypt(param.Value)
+				if err != nil {
+					log.Println(err)
+				}
+				log.Println("[DEBUG] Decrypted Value: ", string(cleanData))
+				p.Value = string(cleanData)
 				switch outputType {
 				case "raw":
 					fmt.Print(p.Value, "\n")

@@ -24,7 +24,7 @@ func init() {
 
 var addCmd = &cobra.Command{
 	Use:     "put",
-	Aliases: []string{"add", "put"},
+	Aliases: []string{"add", "put", "set"},
 	Short:   "Add/Update Parameter",
 	Run: func(cmd *cobra.Command, args []string) {
 		log.Println("[DEBUG] Add/Update Parameters")
@@ -33,6 +33,22 @@ var addCmd = &cobra.Command{
 			log.Println(err)
 		}
 		log.Println("[DEBUG] Parameter: ", param)
+		if encryptionAlgo != "" {
+			log.Println("[DEBUG] Encrypting parameters")
+
+			for i, p := range parameters {
+				decrypted, err := encrypter.Decrypt(p.Value)
+				if err != nil {
+					log.Println(err)
+				}
+				parameters[i].Value = string(decrypted)
+			}
+		}
+		encryptedText, err := encrypter.Encrypt([]byte(param.Value))
+		if err != nil {
+			log.Println(err)
+		}
+		param.Value = string(encryptedText)
 		parameters.Add(param)
 		log.Println("[DEBUG] Parameters: ", parameters)
 		err = provider.Save(parameters)

@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/cdalar/parampiper/internal/data"
+	"github.com/cdalar/parampiper/internal/secure"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -15,16 +16,34 @@ var (
 	rootCmd = &cobra.Command{
 		Use:   "parampiper",
 		Short: "parampiper is a tool to manage parameters cross different pipelines",
+		Run: func(cmd *cobra.Command, args []string) {
+			log.Println("[DEBUG] Root Command", encryptionAlgo)
+			switch encryptionAlgo {
+			case "none":
+				log.Println("[DEBUG] Using Encryption None")
+				encrypter = &secure.None{}
+			case "aes":
+				log.Println("[DEBUG] Using Encryption AES")
+				encrypter = &secure.AES{}
+			case "base64":
+				log.Println("[DEBUG] Using Encryption Base64")
+				encrypter = &secure.Base64{}
+			default:
+				log.Println("[DEBUG] Using Default Encryption AES")
+				encrypter = &secure.AES{}
+			}
+
+		},
 	}
-	provider     data.DataProviderInterface
-	providerList = []string{"local_file", "azure_blob"}
-	// dataProvider string
+	provider       data.DataProviderInterface
+	providerList   = []string{"local_file", "azure_blob"}
+	encryptionAlgo string
+	encrypter      secure.Encrypter
 )
 
-// func init() {
-// 	rootCmd.Flags().StringVarP(&dataProvider, "data", "d", "local_file", "Data Provider to use")
-
-// }
+func init() {
+	rootCmd.PersistentFlags().StringVarP(&encryptionAlgo, "enc", "e", "", "Encryption Algorithm to use: aes, rsa")
+}
 
 // Execute executes the root command.
 func Execute() error {
