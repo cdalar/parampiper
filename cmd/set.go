@@ -67,6 +67,23 @@ var addCmd = &cobra.Command{
 		param.Type = "basic"
 
 		log.Println("[DEBUG] Parameter: ", param)
+		log.Println("[DEBUG] Parameter: ", param)
+		if encryptionAlgo != "" {
+			log.Println("[DEBUG] Encrypting parameters")
+
+			for i, p := range parameters {
+				decrypted, err := encrypter.Decrypt(p.Value)
+				if err != nil {
+					log.Println(err)
+				}
+				parameters[i].Value = string(decrypted)
+			}
+		}
+		encryptedText, err := encrypter.Encrypt([]byte(param.Value))
+		if err != nil {
+			log.Println(err)
+		}
+		param.Value = string(encryptedText)
 		parameters.Add(param)
 		log.Println("[DEBUG] Parameters: ", parameters)
 		err = provider.Save(parameters)

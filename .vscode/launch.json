@@ -17,7 +17,17 @@
             "mode": "debug",
             "program": "${workspaceFolder}",
             "args": ["ls"]
+        },
+        {
+            "name": "get",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "program": "${workspaceFolder}",
+            "args": ["get","enc1","-c", ".p8r/parampiper.yaml"],
+            // "env": {
+            //     "PP_CONFIG": "foo"
+            // }
         }
-
     ]
 }

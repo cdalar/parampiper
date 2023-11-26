@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/cdalar/parampiper/internal/data"
+	"github.com/cdalar/parampiper/internal/secure"
 	"github.com/cdalar/parampiper/pkg/common"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -28,6 +29,22 @@ var (
 			} else {
 				dataProvider = "local_file"
 			}
+
+			switch encryptionAlgo {
+			case "none":
+				log.Println("[DEBUG] Using Encryption None")
+				encrypter = &secure.None{}
+			case "aes":
+				log.Println("[DEBUG] Using Encryption AES")
+				encrypter = &secure.AES{}
+			case "base64":
+				log.Println("[DEBUG] Using Encryption Base64")
+				encrypter = &secure.Base64{}
+			default:
+				log.Println("[DEBUG] Using Default Encryption AES")
+				encrypter = &secure.AES{}
+			}
+
 			switch dataProvider {
 			case "local_file":
 				provider = &data.LocalFile{
@@ -50,10 +67,13 @@ var (
 	provider       data.DataProviderInterface
 	providerList   = []string{"local_file", "azure_blob"}
 	configFilePath string
+	encryptionAlgo string
+	encrypter      secure.Encrypter
 )
 
 func init() {
-	rootCmd.PersistentFlags().StringVarP(&configFilePath, "config", "c", ".pp/parampiper.yaml", "Configuration file")
+	rootCmd.PersistentFlags().StringVarP(&configFilePath, "config", "c", ".p8r/parampiper.yaml", "Configuration file")
+	rootCmd.PersistentFlags().StringVarP(&encryptionAlgo, "enc", "e", "", "Encryption Algorithm to use: aes, rsa, none")
 }
 
 // Execute executes the root command.

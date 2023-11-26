@@ -21,6 +21,17 @@ var listCmd = &cobra.Command{
 		if err != nil {
 			log.Println(err)
 		}
+		if encryptionAlgo != "" {
+			log.Println("[DEBUG] Decrypting parameters with ", encryptionAlgo, " algorithm")
+			for i, p := range parameters {
+				decrypted, err := encrypter.Decrypt(p.Value)
+				if err != nil {
+					log.Println(err)
+				}
+				parameters[i].Value = string(decrypted)
+			}
+		}
+
 		log.Println("[DEBUG]", parameters)
 		tmpl := "NAME\tTYPE\tVALUE\tATTRIBUTES\tINFO\n{{range .}}{{.Name}}\t{{.Type}}\t{{.Value | shorter }}\t{{.Attributes | count}}\t{{.Info}}\n{{end}}"
 		common.TabWriter(parameters, tmpl)

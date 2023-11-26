@@ -1,32 +1,58 @@
 [
     {
-        "name": "resource_group_name",
-        "value": "testing",
+        "name": "cemal",
+        "type": "basic",
+        "value": "eMKRATaIFK4moJzfmWevAbccV7RN5wwCLTE=",
+        "attributes": null,
+        "info": ""
+    },
+    {
+        "name": "enc1",
+        "type": "basic",
+        "value": "pLVb/4t9HSYOM7kgsAWuhH26mQ==",
+        "attributes": null,
         "info": ""
     },
     {
         "name": "location",
-        "value": "westeurope",
+        "type": "",
+        "value": "",
+        "attributes": null,
         "info": ""
     },
     {
-        "name": "testing",
-        "value": "testValue",
-        "info": ""
-    },
-    {
-        "name": "t4",
-        "value": "value4",
+        "name": "resource_group_name",
+        "type": "",
+        "value": "",
+        "attributes": null,
         "info": ""
     },
     {
         "name": "t2",
-        "value": "t2",
+        "type": "",
+        "value": "",
+        "attributes": null,
         "info": ""
     },
     {
         "name": "t3",
-        "value": "t3",
+        "type": "",
+        "value": "",
+        "attributes": null,
+        "info": ""
+    },
+    {
+        "name": "t4",
+        "type": "",
+        "value": "",
+        "attributes": null,
+        "info": ""
+    },
+    {
+        "name": "testing",
+        "type": "",
+        "value": "",
+        "attributes": null,
         "info": ""
     }
 ]
