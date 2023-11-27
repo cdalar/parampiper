@@ -22,6 +22,10 @@ type Parameter struct {
 type Parameters []Parameter
 
 func (p *Parameters) Add(prm Parameter) {
+	if prm.Name == "" {
+		log.Println("[DEBUG] Parameter name is empty")
+		return
+	}
 	isExists, paramPos := p.IfExists(prm)
 	if isExists {
 		(*p)[paramPos] = prm
