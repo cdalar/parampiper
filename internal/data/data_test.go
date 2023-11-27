@@ -6,28 +6,90 @@ import (
 )
 
 func TestParameters_Add(t *testing.T) {
-	params := Parameters{}
-	param := Parameter{Name: "param1", Value: "value1", Info: "info1"}
-
-	params.Add(param)
-
-	if len(params) != 1 {
-		t.Errorf("Expected length of parameters to be 1, got %d", len(params))
+	testCases := []struct {
+		name     string
+		params   Parameters
+		param    Parameter
+		expected Parameters
+	}{
+		{
+			name:     "Add parameter to empty list",
+			params:   Parameters{},
+			param:    Parameter{Name: "param1", Value: "value1", Info: "info1"},
+			expected: Parameters{{Name: "param1", Value: "value1", Info: "info1"}},
+		},
+		{
+			name:     "Add parameter to non-empty list",
+			params:   Parameters{{Name: "param1", Value: "value1", Info: "info1"}},
+			param:    Parameter{Name: "param2", Value: "value2", Info: "info2"},
+			expected: Parameters{{Name: "param1", Value: "value1", Info: "info1"}, {Name: "param2", Value: "value2", Info: "info2"}},
+		},
+		{
+			name:     "Add parameter without Name to the list",
+			params:   Parameters{{Name: "param1", Value: "value1", Info: "info1"}},
+			param:    Parameter{Name: "", Value: "value2", Info: "info2"},
+			expected: Parameters{{Name: "param1", Value: "value1", Info: "info1"}},
+		},
 	}
 
-	if params[0] != param {
-		t.Errorf("Expected parameter to be %v, got %v", param, params[0])
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			params := tc.params
+			param := tc.param
+
+			params.Add(param)
+
+			if len(params) != len(tc.expected) {
+				t.Errorf("Expected length of parameters to be %d, got %d", len(tc.expected), len(params))
+			}
+
+			for i, expectedParam := range tc.expected {
+				if params[i] != expectedParam {
+					t.Errorf("Expected parameter at index %d to be %v, got %v", i, expectedParam, params[i])
+				}
+			}
+		})
 	}
 }
 
 func TestParameters_Remove(t *testing.T) {
-	param := Parameter{Name: "param1", Value: "value1", Info: "info1"}
-	params := Parameters{param}
+	testCases := []struct {
+		name     string
+		params   Parameters
+		param    Parameter
+		expected Parameters
+	}{
+		{
+			name:     "Remove parameter from list",
+			params:   Parameters{{Name: "param1", Value: "value1", Info: "info1"}},
+			param:    Parameter{Name: "param1", Value: "value1", Info: "info1"},
+			expected: Parameters{},
+		},
+		{
+			name:     "Remove non-existing parameter from list",
+			params:   Parameters{{Name: "param1", Value: "value1", Info: "info1"}},
+			param:    Parameter{Name: "param2", Value: "value2", Info: "info2"},
+			expected: Parameters{{Name: "param1", Value: "value1", Info: "info1"}},
+		},
+	}
 
-	params.Remove(param)
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			params := tc.params
+			param := tc.param
 
-	if len(params) != 0 {
-		t.Errorf("Expected length of parameters to be 0, got %d", len(params))
+			params.Remove(param)
+
+			if len(params) != len(tc.expected) {
+				t.Errorf("Expected length of parameters to be %d, got %d", len(tc.expected), len(params))
+			}
+
+			for i, expectedParam := range tc.expected {
+				if params[i] != expectedParam {
+					t.Errorf("Expected parameter at index %d to be %v, got %v", i, expectedParam, params[i])
+				}
+			}
+		})
 	}
 }
 
