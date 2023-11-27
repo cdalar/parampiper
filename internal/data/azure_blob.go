@@ -7,6 +7,7 @@ import (
 
 	"github.com/Azure/azure-sdk-for-go/sdk/azidentity"
 	"github.com/Azure/azure-sdk-for-go/sdk/storage/azblob"
+	"github.com/Azure/azure-sdk-for-go/sdk/storage/azblob/bloberror"
 )
 
 type AzureStorageAccount struct {
@@ -34,8 +35,20 @@ func (p AzureStorageAccount) Read() (Parameters, error) {
 
 	log.Println("[DEBUG]", "SA Name:", p.StorageAccountName, "\nContainer Name:", p.ContainerName, "\nFileName:", p.BlobName)
 	props, err := blobClient.GetProperties(ctx, nil)
-	if err != nil {
-		log.Fatalf("Error getting properties: %v", err)
+	if bloberror.HasCode(err, bloberror.BlobNotFound) {
+		log.Println("[DEBUG] Blob not found:", err)
+		_, err = client.UploadBuffer(ctx, p.ContainerName, p.BlobName, []byte("[]"), &azblob.UploadBufferOptions{})
+		if err != nil {
+			log.Fatalf("Error on creating empty blob: %v", err)
+		}
+
+		props, err = blobClient.GetProperties(ctx, nil)
+		if err != nil {
+			log.Println(err)
+		}
+	} else if err != nil {
+		log.Fatalf("Error getting blob properties: %v", err)
+
 	}
 
 	blobSize := props.ContentLength
