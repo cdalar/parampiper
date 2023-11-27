@@ -1,0 +1,76 @@
+{
+    "format_version": "1.0",
+    "terraform_version": "1.6.4",
+    "values": {
+        "outputs": {
+            "vnet_id": {
+                "sensitive": false,
+                "value": "/subscriptions/3c110410-a29d-4402-96c4-f82b0feaa895/resourceGroups/rg-pp-tf-example/providers/Microsoft.Network/virtualNetworks/example-vnet",
+                "type": "string"
+            }
+        },
+        "root_module": {
+            "resources": [
+                {
+                    "address": "azurerm_resource_group.example",
+                    "mode": "managed",
+                    "type": "azurerm_resource_group",
+                    "name": "example",
+                    "provider_name": "registry.terraform.io/hashicorp/azurerm",
+                    "schema_version": 0,
+                    "values": {
+                        "id": "/subscriptions/3c110410-a29d-4402-96c4-f82b0feaa895/resourceGroups/rg-pp-tf-example",
+                        "location": "westeurope",
+                        "managed_by": "",
+                        "name": "rg-pp-tf-example",
+                        "tags": {},
+                        "timeouts": null
+                    },
+                    "sensitive_values": {
+                        "tags": {}
+                    }
+                },
+                {
+                    "address": "azurerm_virtual_network.example",
+                    "mode": "managed",
+                    "type": "azurerm_virtual_network",
+                    "name": "example",
+                    "provider_name": "registry.terraform.io/hashicorp/azurerm",
+                    "schema_version": 0,
+                    "values": {
+                        "address_space": [
+                            "10.0.0.0/16"
+                        ],
+                        "bgp_community": "",
+                        "ddos_protection_plan": [],
+                        "dns_servers": [],
+                        "edge_zone": "",
+                        "encryption": [],
+                        "flow_timeout_in_minutes": 0,
+                        "guid": "f7c970ad-9647-4bbb-a9bb-be7a1b21c48d",
+                        "id": "/subscriptions/3c110410-a29d-4402-96c4-f82b0feaa895/resourceGroups/rg-pp-tf-example/providers/Microsoft.Network/virtualNetworks/example-vnet",
+                        "location": "westeurope",
+                        "name": "example-vnet",
+                        "resource_group_name": "rg-pp-tf-example",
+                        "subnet": [],
+                        "tags": {},
+                        "timeouts": null
+                    },
+                    "sensitive_values": {
+                        "address_space": [
+                            false
+                        ],
+                        "ddos_protection_plan": [],
+                        "dns_servers": [],
+                        "encryption": [],
+                        "subnet": [],
+                        "tags": {}
+                    },
+                    "depends_on": [
+                        "azurerm_resource_group.example"
+                    ]
+                }
+            ]
+        }
+    }
+}

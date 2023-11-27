@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"fmt"
 	"log"
 	"os"
 	"strings"
@@ -56,7 +55,7 @@ func Execute() error {
 
 func checkDataProvider() {
 	dataProvider := os.Getenv("PP_DATA")
-	fmt.Println("Using: " + dataProvider)
+	log.Println("[DEBUG] Using: " + dataProvider)
 	if dataProvider != "" {
 		if !Contains(providerList, dataProvider) {
 			log.Println("Provider (" + dataProvider + ") is not Supported\nPlease use one of the following: " + strings.Join(providerList, ","))
