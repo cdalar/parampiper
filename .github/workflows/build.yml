@@ -71,11 +71,7 @@ jobs:
         if: ${{ !inputs.skipTests }}
         run: go test -v -shuffle=on -run=- -bench=. -benchtime=1x ./...
 
-      # - name: Upload Coverage
-      #   if: ${{ !inputs.skipTests }}
-      #   uses: codecov/codecov-action@v3
-      #   continue-on-error: true
-      #   with:
-      #     token: ${{secrets.CODECOV_TOKEN}}
-      #     file: ./coverage.txt
-      #     fail_ci_if_error: false
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
