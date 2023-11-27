@@ -32,8 +32,11 @@ func (p LocalFile) Read() (Parameters, error) {
 			log.Println(err)
 		}
 	} else {
-		fmt.Println(p.FilePath, "file does not exist")
-		os.Exit(1)
+		log.Println("[DEBUG]", p.FilePath, "file does not exist. Creating file")
+		err := os.WriteFile(p.FilePath, []byte("[]"), 0644)
+		if err != nil {
+			log.Println(err)
+		}
 	}
 	log.Println("[DEBUG]", parameters)
 	return parameters, nil
