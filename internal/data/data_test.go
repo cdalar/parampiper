@@ -56,20 +56,32 @@ func TestParameters_Remove(t *testing.T) {
 	testCases := []struct {
 		name     string
 		params   Parameters
-		param    Parameter
+		param    string
 		expected Parameters
 	}{
 		{
 			name:     "Remove parameter from list",
 			params:   Parameters{{Name: "param1", Value: "value1", Info: "info1"}},
-			param:    Parameter{Name: "param1", Value: "value1", Info: "info1"},
+			param:    "param1",
 			expected: Parameters{},
 		},
 		{
 			name:     "Remove non-existing parameter from list",
 			params:   Parameters{{Name: "param1", Value: "value1", Info: "info1"}},
-			param:    Parameter{Name: "param2", Value: "value2", Info: "info2"},
+			param:    "param2",
 			expected: Parameters{{Name: "param1", Value: "value1", Info: "info1"}},
+		},
+		{
+			name:     "Remove from multi parameter list",
+			params:   Parameters{{Name: "param1", Value: "value1", Info: "info1"}, {Name: "param2", Value: "value2", Info: "info2"}, {Name: "param3", Value: "value3", Info: "info3"}},
+			param:    "param2",
+			expected: Parameters{{Name: "param1", Value: "value1", Info: "info1"}, {Name: "param3", Value: "value3", Info: "info3"}},
+		},
+		{
+			name:     "Remove multi parameters from list",
+			params:   Parameters{{Name: "param1", Value: "value1", Info: "info1"}, {Name: "param2", Value: "value2", Info: "info2"}, {Name: "param3", Value: "value3", Info: "info3"}},
+			param:    "param2,param1",
+			expected: Parameters{{Name: "param3", Value: "value3", Info: "info3"}},
 		},
 	}
 
@@ -141,5 +153,62 @@ func TestParameter_String(t *testing.T) {
 	expectedStr := "param1: value1 (info1)"
 	if str != expectedStr {
 		t.Errorf("Expected string representation to be %s, got %s", expectedStr, str)
+	}
+}
+func TestParameters_Filter(t *testing.T) {
+	testCases := []struct {
+		name       string
+		params     Parameters
+		filterList string
+		revert     bool
+		expected   Parameters
+	}{
+		{
+			name:       "Empty filter list",
+			params:     Parameters{{Name: "param1", Value: "value1", Info: "info1"}},
+			filterList: "",
+			expected:   Parameters{},
+		},
+		{
+			name:       "Non-empty filter list",
+			params:     Parameters{{Name: "param1", Value: "value1", Info: "info1"}, {Name: "param2", Value: "value2", Info: "info2"}},
+			filterList: "param1,param3",
+			expected:   Parameters{{Name: "param1", Value: "value1", Info: "info1"}},
+		},
+		{
+			name:       "All parameters in filter list",
+			params:     Parameters{{Name: "param1", Value: "value1", Info: "info1"}, {Name: "param2", Value: "value2", Info: "info2"}},
+			filterList: "param1,param2",
+			expected:   Parameters{{Name: "param1", Value: "value1", Info: "info1"}, {Name: "param2", Value: "value2", Info: "info2"}},
+		},
+		{
+			name:       "No matching parameters",
+			params:     Parameters{{Name: "param1", Value: "value1", Info: "info1"}, {Name: "param2", Value: "value2", Info: "info2"}},
+			filterList: "param3,param4",
+			expected:   Parameters{},
+		},
+		{
+			name:       "Single parameter name",
+			params:     Parameters{{Name: "param1", Value: "value1", Info: "info1"}, {Name: "param2", Value: "value2", Info: "info2"}, {Name: "param3", Value: "value3", Info: "info3"}},
+			filterList: "param2",
+			expected:   Parameters{{Name: "param2", Value: "value2", Info: "info2"}},
+		},
+	}
+
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			params := tc.params
+			filtered := params.Filter(tc.filterList)
+
+			if len(filtered) != len(tc.expected) {
+				t.Errorf("Expected length of filtered parameters to be %d, got %d", len(tc.expected), len(filtered))
+			}
+
+			for i, expectedParam := range tc.expected {
+				if filtered[i] != expectedParam {
+					t.Errorf("Expected filtered parameter at index %d to be %v, got %v", i, expectedParam, filtered[i])
+				}
+			}
+		})
 	}
 }

@@ -1,37 +1,32 @@
 [
     {
-        "name": "VNET22",
-        "value": "virtualNetworks/test-vnet",
+        "name": "resource_group_name",
+        "value": "testing",
         "info": ""
     },
     {
-        "name": "SA_DEV_CONT",
-        "value": "/stparampiper",
+        "name": "location",
+        "value": "westeurope",
         "info": ""
     },
     {
-        "name": "SA_DEV_CONT33",
-        "value": "/subscriptions/xxx/resourceGroups/",
-        "info": ""
-    },
-    {
-        "name": "testName22",
+        "name": "testing",
         "value": "testValue",
         "info": ""
     },
     {
-        "name": "testName567",
-        "value": "433",
+        "name": "t4",
+        "value": "value4",
         "info": ""
     },
     {
-        "name": "cemal22222",
-        "value": "43",
-        "info": "infoede"
+        "name": "t2",
+        "value": "t2",
+        "info": ""
     },
     {
-        "name": "cemal",
-        "value": "45622",
+        "name": "t3",
+        "value": "t3",
         "info": ""
     }
 ]

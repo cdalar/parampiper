@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"strings"
 
 	"gopkg.in/yaml.v2"
 )
@@ -35,13 +36,30 @@ func (p *Parameters) Add(prm Parameter) {
 	}
 }
 
-func (p *Parameters) Remove(prm Parameter) {
-	for i, param := range *p {
-		if param.Name == prm.Name {
-			*p = append((*p)[:i], (*p)[i+1:]...)
-			break
+func (p *Parameters) Remove(parameterList string) {
+	parameters := *p
+	prm := strings.Split(parameterList, ",")
+	for i := len(parameters) - 1; i >= 0; i-- {
+		for _, parameter := range prm {
+			if (*p)[i].Name == parameter {
+				*p = append((*p)[:i], (*p)[i+1:]...)
+			}
 		}
 	}
+}
+
+func (p *Parameters) Filter(filterList string) Parameters {
+	var filtered Parameters
+	sliceList := strings.Split(filterList, ",")
+	for _, param := range *p {
+		for _, filter := range sliceList {
+			if param.Name == filter {
+				log.Println("[DEBUG] Found parameter: ", param.Name)
+				filtered = append(filtered, param)
+			}
+		}
+	}
+	return filtered
 }
 
 func (p *Parameters) IfExists(prm Parameter) (bool, int) {

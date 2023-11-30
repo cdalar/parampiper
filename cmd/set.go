@@ -24,7 +24,7 @@ func init() {
 
 var addCmd = &cobra.Command{
 	Use:     "set",
-	Aliases: []string{"set", "put"},
+	Aliases: []string{"put", "add"},
 	Short:   "Add/Update Parameter",
 	Run: func(cmd *cobra.Command, args []string) {
 		log.Println("[DEBUG] Add/Update Parameters")

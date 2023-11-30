@@ -3,7 +3,6 @@ package cmd
 import (
 	"log"
 
-	"github.com/cdalar/parampiper/internal/data"
 	"github.com/spf13/cobra"
 )
 
@@ -27,11 +26,13 @@ var rmCmd = &cobra.Command{
 		if err != nil {
 			log.Println(err)
 		}
-		p := data.Parameter{
-			Name: param.Name,
+		parameters.Remove(param.Name)
+
+		log.Println("[DEBUG] Parameters: ", parameters)
+		err = provider.Save(parameters)
+		if err != nil {
+			log.Println(err)
 		}
-		log.Println("[DEBUG] Parameter: ", p)
-		parameters.Remove(p)
 
 		log.Println("[DEBUG] Parameters: ", parameters)
 		err = provider.Save(parameters)
