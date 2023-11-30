@@ -17,7 +17,9 @@ var (
 		PersistentPreRun: func(cmd *cobra.Command, args []string) {
 			log.Println("[DEBUG] Args: " + strings.Join(os.Args, ","))
 			log.Println("[DEBUG] Configuration File: " + configFilePath)
-			ReadConfig(configFilePath)
+			if len(os.Args) > 1 && os.Args[1] != "init" && os.Args[1] != "version" {
+				ReadConfig(configFilePath)
+			}
 			log.Println("[DEBUG]", viper.AllSettings())
 			dataProvider, isEnvExits := os.LookupEnv("PP_DATA")
 			if isEnvExits {
