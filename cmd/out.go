@@ -6,8 +6,11 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var parameterList string
+
 func init() {
-	outCmd.Flags().StringVarP(&outputType, "output", "o", "", "Output type: raw, json, yaml, table")
+	outCmd.Flags().StringVarP(&outputType, "output", "o", "", "Output type: tfvars, ")
+	outCmd.Flags().StringVarP(&parameterList, "list", "l", "", "List of parameters to output (comma separated)")
 	rootCmd.AddCommand(outCmd)
 }
 
@@ -22,6 +25,10 @@ var outCmd = &cobra.Command{
 		parameters, err := provider.Read()
 		if err != nil {
 			log.Println(err)
+		}
+		log.Println("[DEBUG] Parameter List: ", parameterList)
+		if parameterList != "" {
+			parameters = parameters.Filter(parameterList)
 		}
 
 		log.Println("[DEBUG]", parameters)

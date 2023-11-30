@@ -1,0 +1,23 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+
+        {
+            "name": "rm",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "program": "${workspaceFolder}",
+            "args": ["rm","-n","t2,t3"]
+        },
+        {
+            "name": "ls",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "program": "${workspaceFolder}",
+            "args": ["ls"]
+        }
+
+    ]
+}

@@ -16,7 +16,6 @@ var listCmd = &cobra.Command{
 	Short:   "List Parameters",
 	Run: func(cmd *cobra.Command, args []string) {
 		log.Println("[DEBUG] List Parameters")
-
 		parameters, err := provider.Read()
 		if err != nil {
 			log.Println(err)

@@ -25,7 +25,7 @@ func (p LocalFile) Read() (Parameters, error) {
 	if fileExists(p.FilePath) {
 		jsonBlob, err := os.ReadFile(p.FilePath)
 		if err != nil {
-			log.Println(err)
+			log.Println(p.FilePath, "file does not exist")
 		}
 		err = json.Unmarshal(jsonBlob, &parameters)
 		if err != nil {

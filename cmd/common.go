@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"fmt"
 	"html/template"
 	"log"
 	"os"
@@ -12,20 +11,27 @@ import (
 	"k8s.io/apimachinery/pkg/util/duration"
 )
 
-func ReadConfig(filename string) {
-	dir, err := os.Getwd()
-	if err != nil {
-		log.Println(err)
+func FileExists(filename string) bool {
+	info, err := os.Stat(filename)
+	if os.IsNotExist(err) {
+		return false
 	}
-	viper.SetConfigName("parampiper")
-	viper.AddConfigPath(dir + "/.pp")
-	err = viper.ReadInConfig()
-	if err != nil {
-		fmt.Println(err)
-	}
+	return !info.IsDir()
+}
 
-	if _, err := os.Stat(dir + "/.pp/" + filename + ".yaml"); err == nil {
-		viper.SetConfigName(filename)
+func ReadConfig(configFilePath string) {
+	if !FileExists(configFilePath) {
+		log.Println("Configuration File: " + configFilePath + " does not exist")
+		os.Exit(1)
+	}
+	if configFilePath != "" {
+		log.Println("[DEBUG] Config Path: " + configFilePath)
+		viper.SetConfigFile(configFilePath)
+		err := viper.ReadInConfig() // Find and read the config file
+		if err != nil {
+			log.Println("Problem on ReadInConfig") // Handle errors reading the config file
+			log.Println(err)
+		}
 		err = viper.MergeInConfig()
 		if err != nil {
 			log.Println(err)
@@ -33,7 +39,28 @@ func ReadConfig(filename string) {
 	}
 
 	log.Println("[DEBUG]", viper.AllSettings())
-	// onctlConfig = viper.AllSettings()
+
+	// dir, err := os.Getwd()
+	// if err != nil {
+	// 	log.Println(err)
+	// }
+	// viper.SetConfigName("parampiper")
+	// viper.AddConfigPath(dir + "/.pp")
+	// err = viper.ReadInConfig()
+	// if err != nil {
+	// 	fmt.Println(err)
+	// }
+
+	// if _, err := os.Stat(dir + "/.pp/" + filename + ".yaml"); err == nil {
+	// 	viper.SetConfigName(filename)
+	// 	err = viper.MergeInConfig()
+	// 	if err != nil {
+	// 		log.Println(err)
+	// 	}
+	// }
+
+	// log.Println("[DEBUG]", viper.AllSettings())
+	// // onctlConfig = viper.AllSettings()
 }
 
 func durationFromCreatedAt(createdAt time.Time) string {
