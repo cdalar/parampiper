@@ -1,12 +1,8 @@
 package main
 
 import (
-	"bufio"
-	"fmt"
-	"io"
 	"log"
 	"os"
-	"strings"
 
 	"github.com/cdalar/parampiper/cmd"
 
@@ -34,21 +30,4 @@ func main() {
 		log.Println(err)
 	}
 
-}
-
-func isInputFromPipe() bool {
-	fileInfo, _ := os.Stdin.Stat()
-	return fileInfo.Mode()&os.ModeCharDevice == 0
-}
-
-func toUppercase(r io.Reader, w io.Writer) error {
-	scanner := bufio.NewScanner(bufio.NewReader(r))
-	for scanner.Scan() {
-		_, e := fmt.Fprintln(
-			w, strings.ToUpper(scanner.Text()))
-		if e != nil {
-			return e
-		}
-	}
-	return nil
 }
