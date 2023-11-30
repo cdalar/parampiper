@@ -2,5 +2,5 @@ local_file:
   FilePath: parampiper.json
 azure_blob:
   StorageAccountName: stparampiper
-  ContainerName: pp
+  ContainerName: abc
   BlobName: parampiper.json
