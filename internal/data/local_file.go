@@ -5,24 +5,18 @@ import (
 	"fmt"
 	"log"
 	"os"
+
+	"github.com/cdalar/parampiper/pkg/common"
 )
 
 type LocalFile struct {
 	FilePath string
 }
 
-func fileExists(filename string) bool {
-	info, err := os.Stat(filename)
-	if os.IsNotExist(err) {
-		return false
-	}
-	return !info.IsDir()
-}
-
 func (p LocalFile) Read() (Parameters, error) {
 	log.Println("[DEBUG] Reading from LocalFile")
 	parameters := Parameters{}
-	if fileExists(p.FilePath) {
+	if common.FileExists(p.FilePath) {
 		jsonBlob, err := os.ReadFile(p.FilePath)
 		if err != nil {
 			log.Println(p.FilePath, "file does not exist")

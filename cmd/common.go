@@ -7,20 +7,13 @@ import (
 	"text/tabwriter"
 	"time"
 
+	"github.com/cdalar/parampiper/pkg/common"
 	"github.com/spf13/viper"
 	"k8s.io/apimachinery/pkg/util/duration"
 )
 
-func FileExists(filename string) bool {
-	info, err := os.Stat(filename)
-	if os.IsNotExist(err) {
-		return false
-	}
-	return !info.IsDir()
-}
-
 func ReadConfig(configFilePath string) {
-	if !FileExists(configFilePath) {
+	if !common.FileExists(configFilePath) {
 		log.Println("Configuration File: " + configFilePath + " does not exist")
 		os.Exit(1)
 	}
