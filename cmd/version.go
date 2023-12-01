@@ -22,6 +22,5 @@ var versionCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("Version: " + Version)
 		fmt.Println("Build Time: " + BuildTime)
-		fmt.Println("Go Version: " + GoVersion)
 	},
 }

@@ -15,8 +15,9 @@ builds:
     goarch:
       - amd64
     ldflags:
-      - -w -s -X 'github.com/cdalar/parampiper/cmd.Version=v{{.Version}}-{{.ShortCommit}}'
-
+      - -w -s -X github.com/cdalar/parampiper/cmd.Version=v{{.Version}}-{{.ShortCommit}} 
+      - -X github.com/cdalar/parampiper/cmd.BuildTime={{.Date}}
+    
   - binary: parampiper
     id: pp
     env:
@@ -27,7 +28,9 @@ builds:
       - amd64
       - arm64 # M1
     ldflags:
-      - -w -s -X 'github.com/cdalar/parampiper/cmd.Version=v{{.Version}}-{{.ShortCommit}}'
+      - -w -s -X github.com/cdalar/parampiper/cmd.Version=v{{.Version}}-{{.ShortCommit}}
+      - -X github.com/cdalar/parampiper/cmd.BuildTime={{.Date}}
+      # - -X github.com/cdalar/parampiper/cmd.GoVersion=$(go version)
     # hooks:
       # post: ["gon gon/config-{{.Arch}}.json"]
 
