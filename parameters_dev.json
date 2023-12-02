@@ -1,0 +1,37 @@
+[
+    {
+        "name": "environment",
+        "value": "dev",
+        "info": ""
+    },
+    {
+        "name": "location",
+        "value": "westeurope",
+        "info": ""
+    },
+    {
+        "name": "resource_group_name",
+        "value": "dev_testing",
+        "info": ""
+    },
+    {
+        "name": "t1",
+        "value": "value1",
+        "info": ""
+    },
+    {
+        "name": "t2",
+        "value": "t2",
+        "info": ""
+    },
+    {
+        "name": "t3",
+        "value": "dev3",
+        "info": ""
+    },
+    {
+        "name": "testing",
+        "value": "devValue",
+        "info": ""
+    }
+]

@@ -1,0 +1,37 @@
+[
+    {
+        "name": "environment",
+        "value": "tst",
+        "info": ""
+    },
+    {
+        "name": "location",
+        "value": "westeurope",
+        "info": ""
+    },
+    {
+        "name": "resource_group_name",
+        "value": "tst_testing",
+        "info": ""
+    },
+    {
+        "name": "t1",
+        "value": "value1",
+        "info": ""
+    },
+    {
+        "name": "t2",
+        "value": "tst_t2",
+        "info": ""
+    },
+    {
+        "name": "t3",
+        "value": "v3",
+        "info": ""
+    },
+    {
+        "name": "testing",
+        "value": "tst_testValue",
+        "info": ""
+    }
+]

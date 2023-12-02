@@ -4,6 +4,7 @@ import (
 	"log"
 
 	"github.com/cdalar/parampiper/internal/data"
+	"github.com/cdalar/parampiper/pkg/common"
 	"github.com/spf13/cobra"
 )
 
@@ -28,6 +29,11 @@ var addCmd = &cobra.Command{
 	Short:   "Add/Update Parameter",
 	Run: func(cmd *cobra.Command, args []string) {
 		log.Println("[DEBUG] Add/Update Parameters")
+		unsupportChars := []rune{'-', '*', ',', '.', ':', ';', '<', '>', '?', '\\', '|', ' '}
+		if common.ContainsAny(param.Name, unsupportChars) {
+			log.Println("[ERROR] Parameter name cannot contain any of the following characters:", string(unsupportChars))
+			return
+		}
 		parameters, err := provider.Read()
 		if err != nil {
 			log.Println(err)

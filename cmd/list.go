@@ -3,6 +3,7 @@ package cmd
 import (
 	"log"
 
+	"github.com/cdalar/parampiper/pkg/common"
 	"github.com/spf13/cobra"
 )
 
@@ -23,6 +24,6 @@ var listCmd = &cobra.Command{
 
 		log.Println("[DEBUG]", parameters)
 		tmpl := "NAME\tVALUE\tINFO\n{{range .}}{{.Name}}\t{{.Value}}\t{{.Info}}\n{{end}}"
-		TabWriter(parameters, tmpl)
+		common.TabWriter(parameters, tmpl)
 	},
 }

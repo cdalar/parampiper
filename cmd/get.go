@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/cdalar/parampiper/pkg/common"
 	"github.com/spf13/cobra"
 )
 
@@ -30,9 +31,10 @@ var getCmd = &cobra.Command{
 				log.Println("[DEBUG] Parameter name: ", args[0])
 				param.Name = args[0]
 			}
+		} else {
+			log.Println("[DEBUG] Parameter name: ", param.Name)
 		}
 
-		param.Name = args[0]
 		parameters, err := provider.Read()
 		if err != nil {
 			log.Println(err)
@@ -51,7 +53,7 @@ var getCmd = &cobra.Command{
 					fmt.Print(p.ToYAML())
 				case "table":
 					tmpl := "NAME\tVALUE\tINFO\n{{.Name}}\t{{.Value}}\t{{.Info}}\n"
-					TabWriter(p, tmpl)
+					common.TabWriter(p, tmpl)
 				default:
 					fmt.Print(p.Value, "\n")
 				}

@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/cdalar/parampiper/internal/data"
+	"github.com/cdalar/parampiper/pkg/common"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -18,7 +19,7 @@ var (
 			log.Println("[DEBUG] Args: " + strings.Join(os.Args, ","))
 			log.Println("[DEBUG] Configuration File: " + configFilePath)
 			if len(os.Args) > 1 && os.Args[1] != "init" && os.Args[1] != "version" {
-				ReadConfig(configFilePath)
+				common.ReadConfig(configFilePath)
 			}
 			log.Println("[DEBUG]", viper.AllSettings())
 			dataProvider, isEnvExits := os.LookupEnv("PP_DATA")
@@ -53,7 +54,6 @@ var (
 
 func init() {
 	rootCmd.PersistentFlags().StringVarP(&configFilePath, "config", "c", ".pp/parampiper.yaml", "Configuration file")
-
 }
 
 // Execute executes the root command.
@@ -64,7 +64,7 @@ func Execute() error {
 func checkDataProvider(dataProvider string) {
 	log.Println("[DEBUG] Using: " + dataProvider)
 	if dataProvider != "" {
-		if !Contains(providerList, dataProvider) {
+		if !common.Contains(providerList, dataProvider) {
 			log.Println("Provider (" + dataProvider + ") is not Supported\nPlease use one of the following: " + strings.Join(providerList, ","))
 			os.Exit(1)
 		}
