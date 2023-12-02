@@ -224,3 +224,29 @@ func TestParameters_Filter(t *testing.T) {
 		})
 	}
 }
+
+func TestToJSON(t *testing.T) {
+	tests := []struct {
+		name     string
+		param    Parameter
+		expected string
+	}{
+		{
+			name: "parameter to JSON",
+			param: Parameter{
+				Name:  "Test",
+				Value: "123",
+				Info:  "Test Info",
+			},
+			expected: "{\n    \"name\": \"Test\",\n    \"value\": \"123\",\n    \"info\": \"Test Info\"\n}",
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := tt.param.ToJSON(); got != tt.expected {
+				t.Errorf("ToJSON() = %v, want %v", got, tt.expected)
+			}
+		})
+	}
+}
