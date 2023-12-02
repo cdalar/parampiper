@@ -30,6 +30,18 @@ func TestParameters_Add(t *testing.T) {
 			param:    Parameter{Name: "", Value: "value2", Info: "info2"},
 			expected: Parameters{{Name: "param1", Value: "value1", Info: "info1"}},
 		},
+		{
+			name:     "Update parameter with Empty Value",
+			params:   Parameters{{Name: "param1", Value: "value1", Info: "info1"}},
+			param:    Parameter{Name: "param1", Value: "", Info: "info2"},
+			expected: Parameters{{Name: "param1", Value: "value1", Info: "info2"}},
+		},
+		{
+			name:     "Update parameter with Empty Info value",
+			params:   Parameters{{Name: "param1", Value: "value1", Info: "info1"}},
+			param:    Parameter{Name: "param1", Value: "value2"},
+			expected: Parameters{{Name: "param1", Value: "value2", Info: "info1"}},
+		},
 	}
 
 	for _, tc := range testCases {

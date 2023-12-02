@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"sort"
 	"strings"
 
 	"gopkg.in/yaml.v2"
@@ -29,11 +30,24 @@ func (p *Parameters) Add(prm Parameter) {
 	}
 	isExists, paramPos := p.IfExists(prm)
 	if isExists {
+		if prm.Value == "" {
+			log.Println("[DEBUG] Parameter value is empty")
+			log.Println("[DEBUG] Keep Parameter Value: ", (*p)[paramPos].Value)
+			prm.Value = (*p)[paramPos].Value
+		}
+		if prm.Info == "" {
+			log.Println("[DEBUG] Parameter info is empty")
+			log.Println("[DEBUG] Keep Parameter Info: ", (*p)[paramPos].Info)
+			prm.Info = (*p)[paramPos].Info
+		}
 		(*p)[paramPos] = prm
-		return
 	} else {
 		*p = append(*p, prm)
 	}
+	// Sort the parameters by Name
+	sort.Slice(*p, func(i, j int) bool {
+		return (*p)[i].Name < (*p)[j].Name
+	})
 }
 
 func (p *Parameters) Remove(parameterList string) {

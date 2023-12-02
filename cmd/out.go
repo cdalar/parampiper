@@ -3,6 +3,7 @@ package cmd
 import (
 	"log"
 
+	"github.com/cdalar/parampiper/pkg/common"
 	"github.com/spf13/cobra"
 )
 
@@ -35,10 +36,12 @@ var outCmd = &cobra.Command{
 		switch outputType {
 		case "tfvars":
 			tmpl = "{{range .}}{{.Name}} = \"{{.Value}}\"\n{{end}}"
+		case "export":
+			tmpl = "{{range .}}export {{.Name | upperCase}}=\"{{.Value}}\"\n{{end}}"
 		default:
 			tmpl = "NAME\tVALUE\tINFO\n{{range .}}{{.Name}}\t{{.Value}}\t{{.Info}}\n{{end}}"
 		}
 
-		TabWriter(parameters, tmpl)
+		common.TabWriter(parameters, tmpl)
 	},
 }

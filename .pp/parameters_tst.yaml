@@ -1,0 +1,6 @@
+local_file:
+  FilePath: parameters_tst.json
+azure_blob:
+  StorageAccountName: stparampiper
+  ContainerName: abc
+  BlobName: parampiper_tst.json
