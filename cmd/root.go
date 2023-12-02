@@ -14,7 +14,7 @@ import (
 var (
 	rootCmd = &cobra.Command{
 		Use:   "parampiper",
-		Short: "parampiper is a tool to manage parameters cross different pipelines",
+		Short: "a tool to manage parameters cross different environments",
 		PersistentPreRun: func(cmd *cobra.Command, args []string) {
 			log.Println("[DEBUG] Args: " + strings.Join(os.Args, ","))
 			log.Println("[DEBUG] Configuration File: " + configFilePath)
