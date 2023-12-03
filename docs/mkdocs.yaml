@@ -1,0 +1,24 @@
+site_name: Parampiper
+repo_url: https://github.com/cdalar/parampiper
+theme:
+  name: material
+extra:
+  social:
+    - icon: fontawesome/brands/github-alt
+      link: https://github.com/cdalar/parampiper
+markdown_extensions:
+  - admonition
+  - pymdownx.inlinehilite
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.superfences
+  - pymdownx.tabbed
+  - toc:
+      permalink: true
+# nav:
+#     - Home: index.md
+#     - Installation Guide: installation.md
+#     - User Guide: user_guide.md
+#     - API Reference: api_reference.md
+#     - FAQs: faqs.md
+#     - Changelog: changelog.md
