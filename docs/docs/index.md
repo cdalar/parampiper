@@ -1,4 +1,4 @@
-# Welcome to Parampiper
+# Parampiper
 
 Parampiper is a tool for DevOps professionals to manage parameters/variables between different pipelines/scripts/environments easily. 
 
