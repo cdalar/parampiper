@@ -21,7 +21,10 @@ func init() {
 	rootCmd.AddCommand(importCmd)
 	// importCmd.Flags().StringVarP(&outputType, "tfshowjson", "", "", "Output type: tfvars, ")
 	importCmd.Flags().StringVarP(&importFile, "tfshowjson", "f", "", "Import parameters from command: terraform show -json")
-	importCmd.MarkFlagRequired("tfshowjson")
+	err := importCmd.MarkFlagRequired("tfshowjson")
+	if err != nil {
+		log.Println(err)
+	}
 
 }
 
