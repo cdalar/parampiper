@@ -6,6 +6,7 @@ import (
 	"log"
 	"os"
 
+	"github.com/cdalar/parampiper/internal/data"
 	"github.com/cdalar/parampiper/pkg/common"
 	tfjson "github.com/hashicorp/terraform-json"
 	"github.com/spf13/cobra"
@@ -19,7 +20,8 @@ var (
 func init() {
 	rootCmd.AddCommand(importCmd)
 	// importCmd.Flags().StringVarP(&outputType, "tfshowjson", "", "", "Output type: tfvars, ")
-	importCmd.Flags().StringVar(&importFile, "tfshowjson", "", "Import parameters from command: terraform show -json")
+	importCmd.Flags().StringVarP(&importFile, "tfshowjson", "f", "", "Import parameters from command: terraform show -json")
+	importCmd.MarkFlagRequired("tfshowjson")
 
 }
 
@@ -38,19 +40,24 @@ var importCmd = &cobra.Command{
 		if err != nil {
 			log.Println(err)
 		}
-		log.Println("tfstate: ", tfstate)
-		log.Println("[DEBUG] Parameters: ", parameters)
-		// parameters.Add(param)
-		// log.Println("[DEBUG] Parameters: ", parameters)
-		// err = provider.Save(parameters)
-		// if err != nil {
-		// 	log.Println(err)
-		// }
+		for _, v := range tfstate.Values.RootModule.Resources {
+			log.Println(v.Type, v.Name, v.AttributeValues["id"])
+			param := data.Parameter{
+				Name:  v.Type + "__" + v.Name,
+				Value: v.AttributeValues["id"].(string),
+			}
+			parameters.Add(param)
+		}
+
+		err = provider.Save(parameters)
+		if err != nil {
+			log.Println(err)
+		}
 	},
 }
 
 func read(filePath string) (tfjson.State, error) {
-	if common.FileExists(filePath) {
+	if !common.FileExists(filePath) {
 		return tfjson.State{}, fmt.Errorf("File does not exist")
 	}
 	jsonBlob, err := os.ReadFile(filePath)
