@@ -1,6 +1,6 @@
-# Welcome to MkDocs
+# Parampiper
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+Parampiper is a tool for DevOps professionals to manage parameters/variables between different pipelines/scripts/environments easily. 
 
 ## Commands
 

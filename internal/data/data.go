@@ -18,7 +18,6 @@ type Parameter struct {
 	Name  string `json:"name"`
 	Value string `json:"value"`
 	Info  string `json:"info"`
-	// Time  string `json:"time"`
 }
 
 type Parameters []Parameter
