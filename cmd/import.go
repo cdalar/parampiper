@@ -46,6 +46,7 @@ var importCmd = &cobra.Command{
 		for _, v := range tfstate.Values.RootModule.Resources {
 			log.Println(v.Type, v.Name, v.AttributeValues["id"])
 			param := data.Parameter{
+				//  TODO: Support for same name resources
 				Name:  v.Type + "__" + v.Name,
 				Value: v.AttributeValues["id"].(string),
 			}
