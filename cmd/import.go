@@ -15,12 +15,14 @@ import (
 var (
 	importFile string
 	tfstate    tfjson.State
+	attributes string
 )
 
 func init() {
 	rootCmd.AddCommand(importCmd)
 	// importCmd.Flags().StringVarP(&outputType, "tfshowjson", "", "", "Output type: tfvars, ")
 	importCmd.Flags().StringVarP(&importFile, "tfshowjson", "f", "", "Import parameters from command: terraform show -json")
+	importCmd.Flags().StringVarP(&attributes, "attr", "a", "", "Parameter Attributes")
 	err := importCmd.MarkFlagRequired("tfshowjson")
 	if err != nil {
 		log.Println(err)
@@ -45,10 +47,17 @@ var importCmd = &cobra.Command{
 		}
 		for _, v := range tfstate.Values.RootModule.Resources {
 			log.Println(v.Type, v.Name, v.AttributeValues["id"])
+			if len(v.AttributeValues) > 0 {
+				if err != nil {
+					log.Println(err)
+				}
+			}
 			param := data.Parameter{
 				//  TODO: Support for same name resources
-				Name:  v.Type + "__" + v.Name,
-				Value: v.AttributeValues["id"].(string),
+				Name:       v.Type + "__" + v.Name,
+				Value:      fmt.Sprintf("%v", v.AttributeValues["id"]),
+				Type:       "tfstate",
+				Attributes: v.AttributeValues,
 			}
 			parameters.Add(param)
 		}

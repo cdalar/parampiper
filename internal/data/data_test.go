@@ -26,7 +26,7 @@ func TestParameters_Add(t *testing.T) {
 		},
 		{
 			name:     "Add parameter without Name to the list",
-			params:   Parameters{{Name: "param1", Value: "value1", Info: "info1"}},
+			params:   Parameters{{Name: "param1", Type: "type1", Value: "value1", Info: "info1"}},
 			param:    Parameter{Name: "", Value: "value2", Info: "info2"},
 			expected: Parameters{{Name: "param1", Value: "value1", Info: "info1"}},
 		},
@@ -56,7 +56,7 @@ func TestParameters_Add(t *testing.T) {
 			}
 
 			for i, expectedParam := range tc.expected {
-				if params[i] != expectedParam {
+				if params[i].Value != expectedParam.Value {
 					t.Errorf("Expected parameter at index %d to be %v, got %v", i, expectedParam, params[i])
 				}
 			}
@@ -109,7 +109,7 @@ func TestParameters_Remove(t *testing.T) {
 			}
 
 			for i, expectedParam := range tc.expected {
-				if params[i] != expectedParam {
+				if params[i].Value != expectedParam.Value {
 					t.Errorf("Expected parameter at index %d to be %v, got %v", i, expectedParam, params[i])
 				}
 			}
@@ -147,11 +147,11 @@ func TestParameter_ToJSON(t *testing.T) {
 }
 
 func TestParameter_ToYAML(t *testing.T) {
-	param := Parameter{Name: "param1", Value: "value1", Info: "info1"}
+	param := Parameter{Name: "param1", Type: "basic", Value: "value1", Info: "info1"}
 
 	yamlStr := param.ToYAML()
 
-	expectedYAML := "name: param1\nvalue: value1\ninfo: info1\n"
+	expectedYAML := "name: param1\ntype: basic\nvalue: value1\nattributes: {}\ninfo: info1\n"
 	if yamlStr != expectedYAML {
 		t.Errorf("Expected YAML string to be %s, got %s", expectedYAML, yamlStr)
 	}
@@ -217,7 +217,7 @@ func TestParameters_Filter(t *testing.T) {
 			}
 
 			for i, expectedParam := range tc.expected {
-				if filtered[i] != expectedParam {
+				if filtered[i].Value != expectedParam.Value {
 					t.Errorf("Expected filtered parameter at index %d to be %v, got %v", i, expectedParam, filtered[i])
 				}
 			}

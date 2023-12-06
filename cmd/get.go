@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/cdalar/parampiper/pkg/common"
 	"github.com/spf13/cobra"
 )
 
@@ -51,9 +50,6 @@ var getCmd = &cobra.Command{
 					fmt.Print(p.ToJSON())
 				case "yaml":
 					fmt.Print(p.ToYAML())
-				case "table":
-					tmpl := "NAME\tVALUE\tINFO\n{{.Name}}\t{{.Value}}\t{{.Info}}\n"
-					common.TabWriter(p, tmpl)
 				default:
 					fmt.Print(p.Value, "\n")
 				}
