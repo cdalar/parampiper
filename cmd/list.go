@@ -21,9 +21,8 @@ var listCmd = &cobra.Command{
 		if err != nil {
 			log.Println(err)
 		}
-
 		log.Println("[DEBUG]", parameters)
-		tmpl := "NAME\tVALUE\tINFO\n{{range .}}{{.Name}}\t{{.Value}}\t{{.Info}}\n{{end}}"
+		tmpl := "NAME\tTYPE\tVALUE\tATTRIBUTES\tINFO\n{{range .}}{{.Name}}\t{{.Type}}\t{{.Value | shorter }}\t{{.Attributes | count}}\t{{.Info}}\n{{end}}"
 		common.TabWriter(parameters, tmpl)
 	},
 }

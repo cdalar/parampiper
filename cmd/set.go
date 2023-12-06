@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"encoding/json"
 	"log"
 
 	"github.com/cdalar/parampiper/internal/data"
@@ -20,6 +21,7 @@ func init() {
 		log.Println(err)
 	}
 	addCmd.Flags().StringVarP(&param.Value, "value", "v", "", "Value of the parameter")
+	addCmd.Flags().StringVarP(&attributes, "attr", "a", "", "Parameter Attributes")
 	addCmd.Flags().StringVarP(&param.Info, "info", "i", "", "Info of the parameter")
 }
 
@@ -38,6 +40,32 @@ var addCmd = &cobra.Command{
 		if err != nil {
 			log.Println(err)
 		}
+		if attributes != "" {
+			param.Attributes = make(map[string]interface{})
+			err = json.Unmarshal([]byte(attributes), &param.Attributes)
+			if err != nil {
+				log.Println(err)
+			}
+		}
+		for _, parameter := range parameters {
+			if parameter.Name == param.Name {
+				if param.Value == "" {
+					param.Value = parameter.Value
+				}
+				if param.Info == "" {
+					param.Info = parameter.Info
+				}
+				if param.Type == "" {
+					param.Type = parameter.Type
+				}
+				if param.Attributes == nil {
+					param.Attributes = parameter.Attributes
+				}
+			}
+		}
+
+		param.Type = "basic"
+
 		log.Println("[DEBUG] Parameter: ", param)
 		parameters.Add(param)
 		log.Println("[DEBUG] Parameters: ", parameters)

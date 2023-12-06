@@ -73,8 +73,25 @@ func durationFromCreatedAt(createdAt time.Time) string {
 	return duration.HumanDuration(time.Since(createdAt))
 }
 
+func count(m map[string]interface{}) int {
+	return len(m)
+}
+
+func shorter(str string) string {
+	length := 30
+	if len(str) > length {
+		return str[:length/2] + "..." + str[len(str)-length/2:]
+	}
+	return str
+}
+
 func TabWriter(res interface{}, tmpl string) { //nolint
-	var funcs = template.FuncMap{"upperCase": strings.ToUpper, "durationFromCreatedAt": durationFromCreatedAt}
+	var funcs = template.FuncMap{
+		"upperCase":             strings.ToUpper,
+		"durationFromCreatedAt": durationFromCreatedAt,
+		"count":                 count,
+		"shorter":               shorter,
+	}
 	w := tabwriter.NewWriter(os.Stdout, 2, 2, 3, ' ', 0)
 	tmp, err := template.New("test").Funcs(funcs).Parse(tmpl)
 	if err != nil {

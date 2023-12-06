@@ -15,9 +15,11 @@ type DataProviderInterface interface {
 	Save(Parameters) error
 }
 type Parameter struct {
-	Name  string `json:"name"`
-	Value string `json:"value"`
-	Info  string `json:"info"`
+	Name       string                 `json:"name"`
+	Type       string                 `json:"type"`
+	Value      string                 `json:"value"`
+	Attributes map[string]interface{} `json:"attributes"`
+	Info       string                 `json:"info"`
 }
 
 type Parameters []Parameter
