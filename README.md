@@ -1,5 +1,9 @@
 # parampiper
 
+parampiper is a tool for manage parameters across between systems/environments.
+
+[![build](https://github.com/cdalar/parampiper/actions/workflows/build.yml/badge.svg)](https://github.com/cdalar/parampiper/actions/workflows/build.yml)
+
 ## Bash Script 
 ```mermaid
 flowchart LR
