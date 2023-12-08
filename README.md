@@ -1,9 +1,5 @@
 # parampiper
 
-```mermaid
-%% X(parampiper get p_name <a href='http://google.com'>link</a>)--> A(Bash Script) -->B(parampiper set p_name)
-```
-
 ## Bash Script 
 ```mermaid
 flowchart LR
@@ -13,7 +9,7 @@ Y(parampiper out --export) --> A
 %% B --> C{Decision}
 %% C -->|One| D[Result 1]
 %% C -->|Two| E[Result 2]
-
+%% X(parampiper get p_name <a href='http://google.com'>link</a>)--> A(Bash Script) -->B(parampiper set p_name)
 ```
 
 ## Terraform
