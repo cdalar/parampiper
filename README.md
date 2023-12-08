@@ -1,6 +1,8 @@
 # parampiper
 
+```mermaid
 %% X(parampiper get p_name <a href='http://google.com'>link</a>)--> A(Bash Script) -->B(parampiper set p_name)
+```
 
 ## Bash Script 
 ```mermaid
