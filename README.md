@@ -17,7 +17,7 @@ Y(parampiper out --export) --> A
 flowchart LR
 
 X(parampiper get p_name)--> A(Powershell Script) -->B(parampiper set p_name)
-Y(parampiper out --export (TBD)) --> A
+Y(parampiper out --export ~TBD~) --> A
 ```
 
 ## Terraform
