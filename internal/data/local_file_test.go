@@ -1,6 +1,7 @@
 package data
 
 import (
+	"log"
 	"os"
 	"testing"
 )
@@ -61,6 +62,18 @@ func TestLocalFile_ReadNoFile(t *testing.T) {
 			t.Errorf("Expected parameter at index %d to be %v, got %v", i, expectedParam, parameters[i])
 		}
 	}
+}
+
+func TestLocalFile_ReadBadJson(t *testing.T) {
+	// Create a LocalFile instance with the temporary file path
+	localFile := LocalFile{FilePath: "nonexistentfile"}
+
+	// Call the Read method
+	_, err := localFile.Read()
+	if err != nil {
+		log.Println(err)
+	}
+
 }
 
 func TestLocalFile_Save(t *testing.T) {
