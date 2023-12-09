@@ -33,6 +33,5 @@ sudo install parampiper /usr/local/bin/
 
 ### Windows 
 
-```
-
-```
+- download windows binary from [releases page](https://github.com/cdalar/parampiper/releases)
+- unzip and copy parampiper.exe to a location in PATH
