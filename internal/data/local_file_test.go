@@ -40,6 +40,29 @@ func TestLocalFile_Read(t *testing.T) {
 		}
 	}
 }
+
+func TestLocalFile_ReadNoFile(t *testing.T) {
+	// Create a LocalFile instance with the temporary file path
+	localFile := LocalFile{FilePath: "nonexistentfile"}
+
+	// Call the Read method
+	parameters, err := localFile.Read()
+	if err != nil {
+		t.Fatalf("Failed to read parameters from file: %v", err)
+	}
+
+	// Verify the result
+	expectedParameters := Parameters{}
+	if len(parameters) != len(expectedParameters) {
+		t.Errorf("Expected length of parameters to be %d, got %d", len(expectedParameters), len(parameters))
+	}
+	for i, expectedParam := range expectedParameters {
+		if parameters[i].Value != expectedParam.Value {
+			t.Errorf("Expected parameter at index %d to be %v, got %v", i, expectedParam, parameters[i])
+		}
+	}
+}
+
 func TestLocalFile_Save(t *testing.T) {
 	// Create a temporary file for testing
 	tempFile, err := os.CreateTemp("", "testfile")
