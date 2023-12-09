@@ -26,4 +26,13 @@ brew install cdalar/tap/parampiper
 
 ### Linux
 
+```
+curl -sLS https://parampiper.dalar.net/get.sh | sh 
+sudo install parampiper /usr/local/bin/
+```
 
+### Windows 
+
+```
+
+```
