@@ -37,7 +37,7 @@ builds:
 
 archives:
   - id: repl
-    name_template: "{{ .ProjectName }}_{{.Os}}_{{.Arch}}_{{.Version}}"
+    name_template: "{{ .ProjectName }}_{{.Os}}_{{.Arch}}_v{{.Version}}"
     format: tar.gz
     format_overrides:
       - goos: windows
