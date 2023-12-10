@@ -1,5 +1,5 @@
 GO_CMD=go
-BINARY_NAME=parampiper
+BINARY_NAME=prm
 
 # Mark targets as phony (not files)
 .PHONY: all build clean run test

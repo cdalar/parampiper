@@ -1,6 +1,8 @@
 parampiper
+prm
 .terraform
 .terraform.lock.hcl
 terraform.tfstate
 terraform.tfstate.backup
 pp.auto.tfvars
+docs/site/
