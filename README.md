@@ -119,12 +119,9 @@ Different ways to output parameters
 ```
 parampiper out -oexport > export.sh
 ```
-
+### Exporting as Terraform tfvars file 
 ```
 parampiper out -otfvars > parameters.auto.tfvars
 ```
-by exporting it as *auto.tfvars you can directly use it inside your terraform code. 
+by exporting it as *auto.tfvars ([tfvars files](https://developer.hashicorp.com/terraform/language/values/variables#variable-definitions-tfvars-files)) you can directly use it inside your terraform code. 
 
-```
-
-```
