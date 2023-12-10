@@ -20,10 +20,11 @@ func (p LocalFile) Read() (Parameters, error) {
 		jsonBlob, err := os.ReadFile(p.FilePath)
 		if err != nil {
 			log.Println(p.FilePath, "file does not exist")
+			return nil, err
 		}
 		err = json.Unmarshal(jsonBlob, &parameters)
 		if err != nil {
-			log.Println(err)
+			return nil, err
 		}
 	} else {
 		log.Println("[DEBUG]", p.FilePath, "file does not exist. Creating file")
