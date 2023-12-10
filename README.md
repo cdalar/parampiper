@@ -67,7 +67,7 @@ Use "parampiper [command] --help" for more information about a command.
 
 ### Initial Configuration
 
-Create Configuration file with default values.
+Create the default configuration under `.pp/parampiper.yaml`
 ```bash
 $ parampiper init
 parampiper environment initialized
@@ -80,4 +80,51 @@ azure_blob:
   StorageAccountName: stparampiper
   ContainerName: abc
   BlobName: parampiper.json
+```
+
+### Set which backend provider you like to use
+
+- local_file
+- azure_blob
+
+Set Environment Variables `PP_DATA` to one of the above.
+```
+export PP_DATA=local_file
+```
+
+## Adding/Updating Parameters 
+```
+parampiper set -n key1 -v value1
+```
+will add `key1` key with value `value1`.
+
+
+## Delete Parameters
+```
+parampiper rm -n key1
+```
+will delete the parameter named `key1`
+
+## List Parameters
+```
+parampiper ls 
+NAME   TYPE    VALUE    ATTRIBUTES   INFO
+key1   basic   value1   0
+```
+
+## Output 
+Different ways to output parameters
+
+### Environment Variables
+```
+parampiper out -oexport > export.sh
+```
+
+```
+parampiper out -otfvars > parameters.auto.tfvars
+```
+by exporting it as *auto.tfvars you can directly use it inside your terraform code. 
+
+```
+
 ```
