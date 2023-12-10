@@ -146,6 +146,20 @@ func TestParameter_ToJSON(t *testing.T) {
 	}
 }
 
+func TestParameter_ToJSONError(t *testing.T) {
+	param := Parameter{Name: "param1", Value: "value1", Info: "info1"}
+
+	jsonStr := param.ToJSON()
+
+	expectedJSON, err := json.MarshalIndent(param, "", "    ")
+	if err != nil {
+		t.Errorf("Expected no error, got %v", err)
+	}
+	if jsonStr != string(expectedJSON) {
+		t.Errorf("Expected JSON string to be %s, got %s", expectedJSON, jsonStr)
+	}
+}
+
 func TestParameter_ToYAML(t *testing.T) {
 	param := Parameter{Name: "param1", Type: "basic", Value: "value1", Info: "info1"}
 
