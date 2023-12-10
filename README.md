@@ -21,13 +21,13 @@ parampiper is a tool for manage parameters across between systems/environments.
 
 ### MacOS
 
-```
+```zsh
 brew install cdalar/tap/parampiper
 ```
 
 ### Linux
 
-```
+```bash
 curl -sLS https://parampiper.dalar.net/get.sh | sh 
 sudo install parampiper /usr/local/bin/
 ```
@@ -36,3 +36,48 @@ sudo install parampiper /usr/local/bin/
 
 - download windows binary from [releases page](https://github.com/cdalar/parampiper/releases)
 - unzip and copy parampiper.exe to a location in PATH
+
+
+## Usage
+```bash
+$ parampiper
+a tool to manage parameters cross different environments
+
+Usage:
+  parampiper [command]
+
+Available Commands:
+  completion  Generate the autocompletion script for the specified shell
+  get         Get Parameter Value by Name
+  help        Help about any command
+  import      Import Parameters
+  init        create a .pp directory with the default configuration files
+  ls          List Parameters
+  out         Output Parameters
+  rm          Delete Parameter
+  set         Add/Update Parameter
+  version     Print the version number of onctl
+
+Flags:
+  -c, --config string   Configuration file (default ".pp/parampiper.yaml")
+  -h, --help            help for parampiper
+
+Use "parampiper [command] --help" for more information about a command.
+```
+
+### Initial Configuration
+
+Create Configuration file with default values.
+```bash
+$ parampiper init
+parampiper environment initialized
+```
+Default configuration file is follows:
+```yaml
+local_file:
+  FilePath: parampiper.json
+azure_blob:
+  StorageAccountName: stparampiper
+  ContainerName: abc
+  BlobName: parampiper.json
+```
