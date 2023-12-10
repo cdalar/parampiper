@@ -118,7 +118,10 @@ Different ways to output parameters
 ### Environment Variables
 ```
 parampiper out -oexport > export.sh
+cat export.sh
+export KEY1="value1"
 ```
+
 ### Exporting as Terraform tfvars file 
 ```
 parampiper out -otfvars > parameters.auto.tfvars
