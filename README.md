@@ -40,11 +40,11 @@ sudo install parampiper /usr/local/bin/
 
 ## Usage
 ```bash
-$ parampiper
+$ prm
 a tool to manage parameters cross different environments
 
 Usage:
-  parampiper [command]
+  prm [command]
 
 Available Commands:
   completion  Generate the autocompletion script for the specified shell

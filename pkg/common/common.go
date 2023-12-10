@@ -46,27 +46,6 @@ func ReadConfig(configFilePath string) {
 
 	log.Println("[DEBUG]", viper.AllSettings())
 
-	// dir, err := os.Getwd()
-	// if err != nil {
-	// 	log.Println(err)
-	// }
-	// viper.SetConfigName("parampiper")
-	// viper.AddConfigPath(dir + "/.pp")
-	// err = viper.ReadInConfig()
-	// if err != nil {
-	// 	fmt.Println(err)
-	// }
-
-	// if _, err := os.Stat(dir + "/.pp/" + filename + ".yaml"); err == nil {
-	// 	viper.SetConfigName(filename)
-	// 	err = viper.MergeInConfig()
-	// 	if err != nil {
-	// 		log.Println(err)
-	// 	}
-	// }
-
-	// log.Println("[DEBUG]", viper.AllSettings())
-	// // onctlConfig = viper.AllSettings()
 }
 
 func durationFromCreatedAt(createdAt time.Time) string {
