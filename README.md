@@ -29,13 +29,13 @@ brew install cdalar/tap/parampiper
 
 ```bash
 curl -sLS https://parampiper.dalar.net/get.sh | sh 
-sudo install parampiper /usr/local/bin/
+sudo install prm /usr/local/bin/
 ```
 
 ### Windows 
 
 - download windows binary from [releases page](https://github.com/cdalar/parampiper/releases)
-- unzip and copy parampiper.exe to a location in PATH
+- unzip and copy prm.exe to a location in PATH
 
 
 ## Usage
@@ -59,18 +59,18 @@ Available Commands:
   version     Print the version number of onctl
 
 Flags:
-  -c, --config string   Configuration file (default ".pp/parampiper.yaml")
-  -h, --help            help for parampiper
+  -c, --config string   Configuration file (default ".pp/prm.yaml")
+  -h, --help            help for prm
 
-Use "parampiper [command] --help" for more information about a command.
+Use "prm [command] --help" for more information about a command.
 ```
 
 ### Initial Configuration
 
 Create the default configuration under `.pp/parampiper.yaml`
 ```bash
-$ parampiper init
-parampiper environment initialized
+$ prm init
+prm environment initialized
 ```
 Default configuration file is follows:
 ```yaml
@@ -94,20 +94,20 @@ export PP_DATA=local_file
 
 ## Adding/Updating Parameters 
 ```
-parampiper set -n key1 -v value1
+prm set -n key1 -v value1
 ```
 will add `key1` key with value `value1`.
 
 
 ## Delete Parameters
 ```
-parampiper rm -n key1
+prm rm -n key1
 ```
 will delete the parameter named `key1`
 
 ## List Parameters
 ```
-parampiper ls 
+prm ls 
 NAME   TYPE    VALUE    ATTRIBUTES   INFO
 key1   basic   value1   0
 ```
@@ -117,14 +117,14 @@ Different ways to output parameters
 
 ### Environment Variables
 ```
-parampiper out -oexport > export.sh
+prm out -oexport > export.sh
 cat export.sh
 export KEY1="value1"
 ```
 
 ### Exporting as Terraform tfvars file 
 ```
-parampiper out -otfvars > parameters.auto.tfvars
+prm out -otfvars > parameters.auto.tfvars
 ```
 by exporting it as *auto.tfvars ([tfvars files](https://developer.hashicorp.com/terraform/language/values/variables#variable-definitions-tfvars-files)) you can directly use it inside your terraform code. 
 
