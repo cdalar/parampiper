@@ -1,5 +1,5 @@
 GO_CMD=go
-BINARY_NAME=prm
+BINARY_NAME=p8r
 
 # Mark targets as phony (not files)
 .PHONY: all build clean run test

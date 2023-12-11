@@ -29,29 +29,29 @@ brew install cdalar/tap/parampiper
 
 ```bash
 curl -sLS https://parampiper.dalar.net/get.sh | sh 
-sudo install prm /usr/local/bin/
+sudo install p8r /usr/local/bin/
 ```
 
 ### Windows 
 
 - download windows binary from [releases page](https://github.com/cdalar/parampiper/releases)
-- unzip and copy prm.exe to a location in PATH
+- unzip and copy p8r.exe to a location in PATH
 
 
 ## Usage
 ```bash
-$ prm
+$ p8r
 a tool to manage parameters cross different environments
 
 Usage:
-  prm [command]
+  p8r [command]
 
 Available Commands:
   completion  Generate the autocompletion script for the specified shell
   get         Get Parameter Value by Name
   help        Help about any command
   import      Import Parameters
-  init        create a .pp directory with the default configuration files
+  init        create a .p8r directory with the default configuration files
   ls          List Parameters
   out         Output Parameters
   rm          Delete Parameter
@@ -59,18 +59,18 @@ Available Commands:
   version     Print the version number of onctl
 
 Flags:
-  -c, --config string   Configuration file (default ".pp/prm.yaml")
-  -h, --help            help for prm
+  -c, --config string   Configuration file (default ".p8r/parampiper.yaml")
+  -h, --help            help for p8r
 
-Use "prm [command] --help" for more information about a command.
+Use "p8r [command] --help" for more information about a command.
 ```
 
 ### Initial Configuration
 
 Create the default configuration under `.pp/parampiper.yaml`
 ```bash
-$ prm init
-prm environment initialized
+$ p8r init
+p8r environment initialized
 ```
 Default configuration file is follows:
 ```yaml
@@ -94,20 +94,20 @@ export PP_DATA=local_file
 
 ## Adding/Updating Parameters 
 ```
-prm set -n key1 -v value1
+p8r set -n key1 -v value1
 ```
 will add `key1` key with value `value1`.
 
 
 ## Delete Parameters
 ```
-prm rm -n key1
+p8r rm -n key1
 ```
 will delete the parameter named `key1`
 
 ## List Parameters
 ```
-prm ls 
+p8r ls 
 NAME   TYPE    VALUE    ATTRIBUTES   INFO
 key1   basic   value1   0
 ```
@@ -117,14 +117,14 @@ Different ways to output parameters
 
 ### Environment Variables
 ```
-prm out -oexport > export.sh
+p8r out -oexport > export.sh
 cat export.sh
 export KEY1="value1"
 ```
 
 ### Exporting as Terraform tfvars file 
 ```
-prm out -otfvars > parameters.auto.tfvars
+p8r out -otfvars > parameters.auto.tfvars
 ```
 by exporting it as *auto.tfvars ([tfvars files](https://developer.hashicorp.com/terraform/language/values/variables#variable-definitions-tfvars-files)) you can directly use it inside your terraform code. 
 
