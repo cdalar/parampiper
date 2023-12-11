@@ -59,6 +59,6 @@ download_url="$GITHUB/$REPO/releases/download/$latest_release/parampiper_${os}_$
 echo "Downloading parampiper from $download_url"
 curl -L $download_url -o "parampiper_${os}_${arch}_${latest_release}.tar.gz"
 
-tar zxvf "parampiper_${os}_${arch}_${latest_release}.tar.gz" parampiper
+tar zxvf "parampiper_${os}_${arch}_${latest_release}.tar.gz" p8r
 
-echo "Download complete. parampiper binary is in the current directory."
+echo "Download complete. p8r binary is in the current directory."

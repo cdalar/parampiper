@@ -13,7 +13,7 @@ import (
 
 var (
 	rootCmd = &cobra.Command{
-		Use:   "parampiper",
+		Use:   "p8r",
 		Short: "a tool to manage parameters cross different environments",
 		PersistentPreRun: func(cmd *cobra.Command, args []string) {
 			log.Println("[DEBUG] Args: " + strings.Join(os.Args, ","))
