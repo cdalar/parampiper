@@ -28,7 +28,7 @@ brew install cdalar/tap/parampiper
 ### Linux
 
 ```bash
-curl -sLS https://parampiper.dalar.net/get.sh | sh 
+curl -sLS https://www.p8r.dev/get.sh | sh 
 sudo install p8r /usr/local/bin/
 ```
 
