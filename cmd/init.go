@@ -16,10 +16,10 @@ func init() {
 
 var initCmd = &cobra.Command{
 	Use:   "init",
-	Short: "create a .pp directory with the default configuration files",
+	Short: "create a default configuration file under .p8r/",
 	Run: func(cmd *cobra.Command, args []string) {
-		if _, err := os.Stat(".pp"); os.IsNotExist(err) {
-			if err := os.Mkdir(".pp", os.ModePerm); err != nil {
+		if _, err := os.Stat(".p8r"); os.IsNotExist(err) {
+			if err := os.Mkdir(".p8r", os.ModePerm); err != nil {
 				log.Fatal(err)
 			}
 			embedDir, err := files.EmbededFiles.ReadDir("init")
@@ -29,7 +29,7 @@ var initCmd = &cobra.Command{
 			for _, configFile := range embedDir {
 				log.Println("[DEBUG] initFile:" + configFile.Name())
 				eFile, _ := files.EmbededFiles.ReadFile("init/" + configFile.Name())
-				err = os.WriteFile(".pp/"+configFile.Name(), eFile, 0644)
+				err = os.WriteFile(".p8r/"+configFile.Name(), eFile, 0644)
 				if err != nil {
 					log.Fatal(err)
 				}

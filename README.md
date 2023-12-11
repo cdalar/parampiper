@@ -67,7 +67,7 @@ Use "p8r [command] --help" for more information about a command.
 
 ### Initial Configuration
 
-Create the default configuration under `.pp/parampiper.yaml`
+Create the default configuration under `.p8r/parampiper.yaml`
 ```bash
 $ p8r init
 p8r environment initialized
