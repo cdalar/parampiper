@@ -18,7 +18,7 @@ func init() {
 
 var versionCmd = &cobra.Command{
 	Use:   "version",
-	Short: "Print the version number of onctl",
+	Short: "Print the version number",
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("Version: " + Version)
 		fmt.Println("Build Time: " + BuildTime)
