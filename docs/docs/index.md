@@ -11,9 +11,10 @@ parampiper is a tool for manage parameters across between systems/environments.
 
 ## What parampiper brings 
 
-- single source of truth (SSOT). All you parameters in one place.
-- works on a simple json file. 
-- support several backends (local file, azure blob)
+- 🌍 Single Source of Truth (SSOT). All your parameters in one place.
+- 📄  Works on a simple JSON file.
+- 🔄 Support several backends (local file, Azure Blob).
+
 
 ## Installation
 
