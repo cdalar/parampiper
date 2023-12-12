@@ -1,17 +1,37 @@
 # Parampiper
 
-Parampiper is a tool for DevOps professionals to manage parameters/variables between different pipelines/scripts/environments easily. 
+parampiper is a tool for manage parameters across between systems/environments. 
 
-## Commands
+[![build](https://github.com/cdalar/parampiper/actions/workflows/build.yml/badge.svg)](https://github.com/cdalar/parampiper/actions/workflows/build.yml)
+[![Go Report Card](https://goreportcard.com/badge/github.com/cdalar/parampiper)](https://goreportcard.com/report/github.com/cdalar/parampiper)
+[![codecov](https://codecov.io/gh/cdalar/parampiper/graph/badge.svg?token=7VU7H1II09)](https://codecov.io/gh/cdalar/parampiper)
+[![Github All Releases](https://img.shields.io/github/downloads/cdalar/parampiper/total.svg)]()
+![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/cdalar/parampiper?sort=semver)
+<!-- [![Known Vulnerabilities](https://snyk.io/test/github/cdalar/parampiper/main/badge.svg)](https://snyk.io/test/github/cdalar/parampiper/main) -->
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
+## What parampiper brings 
 
-## Project layout
+- single source of truth (SSOT). All you parameters in one place.
+- works on a simple json file. 
+- support several backends (local file, azure blob)
 
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+## Installation
+
+### MacOS
+
+```zsh
+brew install cdalar/tap/parampiper
+```
+
+### Linux
+
+```bash
+curl -sLS https://www.p8r.dev/get.sh | sh 
+sudo install p8r /usr/local/bin/
+```
+
+### Windows 
+
+- download windows binary from [releases page](https://github.com/cdalar/parampiper/releases)
+- unzip and copy p8r.exe to a location in PATH
+
