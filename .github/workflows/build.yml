@@ -42,7 +42,7 @@ jobs:
         run: gofmt -s -w . && git diff --exit-code
 
       - name: Go Vet
-        run: go vet ./...
+        run: go mod tidy && go vet ./...
 
       - name: Go Tidy
         run: go mod tidy && git diff --exit-code
