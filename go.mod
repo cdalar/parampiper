@@ -2,8 +2,6 @@ module github.com/cdalar/parampiper
 
 go 1.21
 
-toolchain go1.21.5
-
 require (
 	github.com/Azure/azure-sdk-for-go/sdk/azidentity v1.4.0
 	github.com/Azure/azure-sdk-for-go/sdk/storage/azblob v1.2.0
