@@ -28,7 +28,16 @@ func (p LocalFile) Read() (ParampiperData, error) {
 		}
 	} else {
 		log.Println(p.FilePath, "file does not exist. Creating file")
-		err := os.WriteFile(p.FilePath, []byte("[]"), 0644)
+		ppData = ParampiperData{
+			Version:    DATA_FORMAT_VERSION,
+			Parameters: Parameters{},
+		}
+		JsonData, err := json.MarshalIndent(ppData, "", "    ")
+		if err != nil {
+			log.Println(err)
+		}
+
+		err = os.WriteFile(p.FilePath, JsonData, 0644)
 		if err != nil {
 			log.Println(err)
 		}

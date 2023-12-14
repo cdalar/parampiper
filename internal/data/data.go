@@ -119,3 +119,19 @@ func (p *Parameter) ToYAML() string {
 func (p *Parameter) String() string {
 	return fmt.Sprintf("%s: %s (%s)", p.Name, p.Value, p.Info)
 }
+
+func (ppData *ParampiperData) ToJSON() string {
+	jsonData, err := json.MarshalIndent(ppData, "", "    ")
+	if err != nil {
+		log.Println(err)
+	}
+	return string(jsonData)
+}
+
+func (ppData *ParampiperData) ToYAML() string {
+	yamlData, err := yaml.Marshal(ppData)
+	if err != nil {
+		log.Println(err)
+	}
+	return string(yamlData)
+}

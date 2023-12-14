@@ -54,7 +54,14 @@ func TestLocalFile_Read(t *testing.T) {
 	defer os.Remove(tempFile.Name())
 
 	// Write test data to the temporary file
-	testData := `[{"Name": "param1", "Value": "value1", "Info": "info1"}]`
+	ppData := ParampiperData{
+		Version: DATA_FORMAT_VERSION,
+		Parameters: Parameters{
+			{Name: "param1", Value: "value1", Info: "info1"},
+			{Name: "param2", Value: "value2", Info: "info2"},
+		},
+	}
+	testData := ppData.ToJSON()
 	err = os.WriteFile(tempFile.Name(), []byte(testData), 0644)
 	if err != nil {
 		t.Fatalf("Failed to write test data to file: %v", err)
@@ -70,7 +77,7 @@ func TestLocalFile_Read(t *testing.T) {
 	}
 
 	// Verify the result
-	expectedParameters := Parameters{{Name: "param1", Value: "value1", Info: "info1"}}
+	expectedParameters := Parameters{{Name: "param1", Value: "value1", Info: "info1"}, {Name: "param2", Value: "value2", Info: "info2"}}
 	if len(parameters.Parameters) != len(expectedParameters) {
 		t.Errorf("Expected length of parameters to be %d, got %d", len(expectedParameters), len(parameters.Parameters))
 	}
@@ -100,6 +107,10 @@ func TestLocalFile_ReadNoFile(t *testing.T) {
 		if parameters.Parameters[i].Value != expectedParam.Value {
 			t.Errorf("Expected parameter at index %d to be %v, got %v", i, expectedParam, parameters.Parameters[i])
 		}
+	}
+	err = os.Remove("nonexistentfile")
+	if err != nil {
+		log.Println(err)
 	}
 }
 
