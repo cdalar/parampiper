@@ -40,7 +40,7 @@ sudo install p8r /usr/local/bin/
 
 
 ## Usage
-```bash
+```
 $ p8r
 a tool to manage parameters cross different environments
 
