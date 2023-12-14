@@ -16,7 +16,7 @@ type AzureStorageAccount struct {
 	BlobName           string
 }
 
-func (p AzureStorageAccount) Read() (Parameters, error) {
+func (p AzureStorageAccount) Read() (ParampiperData, error) {
 	url := "https://" + p.StorageAccountName + ".blob.core.windows.net/"
 	ctx := context.Background()
 
@@ -60,17 +60,17 @@ func (p AzureStorageAccount) Read() (Parameters, error) {
 		log.Fatalf("Error downloading blob: %v", err)
 	}
 
-	var parameters Parameters
-	err = json.Unmarshal(jsonData, &parameters)
+	var ppData ParampiperData
+	err = json.Unmarshal(jsonData, &ppData)
 	if err != nil {
 		log.Fatalf("Error unmarshalling JSON: %v", err)
 	}
 
-	log.Println("[DEBUG]", parameters)
-	return parameters, nil
+	log.Println("[DEBUG]", ppData)
+	return ppData, nil
 }
 
-func (p AzureStorageAccount) Save(params Parameters) error {
+func (p AzureStorageAccount) Save(ppData ParampiperData) error {
 	url := "https://" + p.StorageAccountName + ".blob.core.windows.net/"
 	ctx := context.Background()
 
@@ -84,7 +84,8 @@ func (p AzureStorageAccount) Save(params Parameters) error {
 		log.Println(err)
 	}
 
-	jsonData, err := json.MarshalIndent(params, "", "    ")
+	ppData.Version = DATA_FORMAT_VERSION
+	jsonData, err := json.MarshalIndent(ppData, "", "    ")
 	if err != nil {
 		log.Println(err)
 	}
@@ -98,12 +99,12 @@ func (p AzureStorageAccount) Save(params Parameters) error {
 
 func (p AzureStorageAccount) String() string {
 	s := ""
-	parameters, err := p.Read()
+	readData, err := p.Read()
 	if err != nil {
 		log.Println(err)
 	}
 
-	for _, parameter := range parameters {
+	for _, parameter := range readData.Parameters {
 		s += parameter.String() + "\n"
 	}
 	return s

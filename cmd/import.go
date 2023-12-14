@@ -35,7 +35,7 @@ var importCmd = &cobra.Command{
 	Short: "Import Parameters",
 	Run: func(cmd *cobra.Command, args []string) {
 		log.Println("[DEBUG] Import Parameters")
-		parameters, err := provider.Read()
+		readData, err := provider.Read()
 		if err != nil {
 			log.Println(err)
 		}
@@ -59,10 +59,10 @@ var importCmd = &cobra.Command{
 				Type:       "tfstate",
 				Attributes: v.AttributeValues,
 			}
-			parameters.Add(param)
+			readData.Parameters.Add(param)
 		}
 
-		err = provider.Save(parameters)
+		err = provider.Save(readData)
 		if err != nil {
 			log.Println(err)
 		}

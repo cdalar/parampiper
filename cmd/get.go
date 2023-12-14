@@ -34,12 +34,12 @@ var getCmd = &cobra.Command{
 			log.Println("[DEBUG] Parameter name: ", param.Name)
 		}
 
-		parameters, err := provider.Read()
+		readData, err := provider.Read()
 		if err != nil {
 			log.Println(err)
 		}
 		log.Println("[DEBUG] Searching for parameter named: ", param.Name)
-		for _, p := range parameters {
+		for _, p := range readData.Parameters {
 			if p.Name == param.Name {
 				log.Println("[DEBUG] Found parameter: ", p)
 				log.Println("[DEBUG] Value: ", p.Value)
@@ -56,8 +56,5 @@ var getCmd = &cobra.Command{
 			}
 		}
 
-		// log.Println("[DEBUG]", parameters)
-		// tmpl := "NAME\tVALUE\tINFO\n{{range .}}{{.Name}}\t{{.Value}}\t{{.Info}}\n{{end}}"
-		// TabWriter(parameters, tmpl)
 	},
 }

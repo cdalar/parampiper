@@ -10,19 +10,33 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
+const (
+	// Version represents the version of this Data Format.
+	DATA_FORMAT_VERSION = "1.0"
+)
+
 type DataProviderInterface interface {
-	Read() (Parameters, error)
-	Save(Parameters) error
+	Read() (ParampiperData, error)
+	Save(ParampiperData) error
 }
 type Parameter struct {
-	Name       string                 `json:"name"`
-	Type       string                 `json:"type"`
-	Value      string                 `json:"value"`
-	Attributes map[string]interface{} `json:"attributes"`
-	Info       string                 `json:"info"`
+	Name       string                 `json:"name,omitempty"`
+	Type       string                 `json:"type,omitempty"`
+	Value      string                 `json:"value,omitempty"`
+	Attributes map[string]interface{} `json:"attributes,omitempty"`
+	Info       string                 `json:"info,omitempty"`
 }
 
 type Parameters []Parameter
+
+// ParamPiper is the top level structure for the Parampiper Data Format.
+type ParampiperData struct {
+	// Version represents the version of this Data Format.
+	Version string `json:"version"`
+
+	// Parameters represents the collection of parameters used by ParamPiper.
+	Parameters Parameters `json:"parameters"`
+}
 
 func (p *Parameters) Add(prm Parameter) {
 	if prm.Name == "" {
