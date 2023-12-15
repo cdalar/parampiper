@@ -1,4 +1,7 @@
 name: Snyk - Golang
+permissions:
+    contents: read
+    security-events: write
 on: push
 jobs:
   security:
