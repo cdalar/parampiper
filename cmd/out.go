@@ -23,16 +23,16 @@ var outCmd = &cobra.Command{
 		var tmpl string
 		log.Println("[DEBUG] Output Parameters")
 
-		parameters, err := provider.Read()
+		readData, err := provider.Read()
 		if err != nil {
 			log.Println(err)
 		}
 		log.Println("[DEBUG] Parameter List: ", parameterList)
 		if parameterList != "" {
-			parameters = parameters.Filter(parameterList)
+			readData.Parameters = readData.Parameters.Filter(parameterList)
 		}
 
-		log.Println("[DEBUG]", parameters)
+		log.Println("[DEBUG]", readData)
 		switch outputType {
 		case "tfvars":
 			tmpl = "{{range .}}{{.Name}} = \"{{.Value}}\"\n{{end}}"
@@ -42,6 +42,6 @@ var outCmd = &cobra.Command{
 			tmpl = "NAME\tVALUE\tINFO\n{{range .}}{{.Name}}\t{{.Value}}\t{{.Info}}\n{{end}}"
 		}
 
-		common.TabWriter(parameters, tmpl)
+		common.TabWriter(readData.Parameters, tmpl)
 	},
 }
