@@ -36,18 +36,19 @@ var addCmd = &cobra.Command{
 			log.Println("[ERROR] Parameter name cannot contain any of the following characters:", string(unsupportChars))
 			return
 		}
-		parameters, err := provider.Read()
+		readData, err := provider.Read()
 		if err != nil {
 			log.Println(err)
 		}
 		if attributes != "" {
+			log.Println("[DEBUG] Attributes: ", attributes)
 			param.Attributes = make(map[string]interface{})
 			err = json.Unmarshal([]byte(attributes), &param.Attributes)
 			if err != nil {
 				log.Println(err)
 			}
 		}
-		for _, parameter := range parameters {
+		for _, parameter := range readData.Parameters {
 			if parameter.Name == param.Name {
 				if param.Value == "" {
 					param.Value = parameter.Value
@@ -67,9 +68,9 @@ var addCmd = &cobra.Command{
 		param.Type = "basic"
 
 		log.Println("[DEBUG] Parameter: ", param)
-		parameters.Add(param)
-		log.Println("[DEBUG] Parameters: ", parameters)
-		err = provider.Save(parameters)
+		readData.Parameters.Add(param)
+		log.Println("[DEBUG] Parameters: ", readData.Parameters)
+		err = provider.Save(readData)
 		if err != nil {
 			log.Println(err)
 		}

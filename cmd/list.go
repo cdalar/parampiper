@@ -17,12 +17,12 @@ var listCmd = &cobra.Command{
 	Short:   "List Parameters",
 	Run: func(cmd *cobra.Command, args []string) {
 		log.Println("[DEBUG] List Parameters")
-		parameters, err := provider.Read()
+		readData, err := provider.Read()
 		if err != nil {
 			log.Println(err)
 		}
-		log.Println("[DEBUG]", parameters)
+		log.Println("[DEBUG]", readData)
 		tmpl := "NAME\tTYPE\tVALUE\tATTRIBUTES\tINFO\n{{range .}}{{.Name}}\t{{.Type}}\t{{.Value | shorter }}\t{{.Attributes | count}}\t{{.Info}}\n{{end}}"
-		common.TabWriter(parameters, tmpl)
+		common.TabWriter(readData.Parameters, tmpl)
 	},
 }

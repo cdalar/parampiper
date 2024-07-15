@@ -53,7 +53,7 @@ var (
 )
 
 func init() {
-	rootCmd.PersistentFlags().StringVarP(&configFilePath, "config", "c", ".pp/parampiper.yaml", "Configuration file")
+	rootCmd.PersistentFlags().StringVarP(&configFilePath, "config", "c", ".p8r/parampiper.yaml", "Configuration file")
 }
 
 // Execute executes the root command.

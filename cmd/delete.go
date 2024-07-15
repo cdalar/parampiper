@@ -22,22 +22,17 @@ var rmCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		log.Println("[DEBUG] Delete Parameter")
 
-		parameters, err := provider.Read()
+		readData, err := provider.Read()
 		if err != nil {
 			log.Println(err)
 		}
-		parameters.Remove(param.Name)
+		readData.Parameters.Remove(param.Name)
 
-		log.Println("[DEBUG] Parameters: ", parameters)
-		err = provider.Save(parameters)
+		log.Println("[DEBUG] Parameters: ", readData)
+		err = provider.Save(readData)
 		if err != nil {
 			log.Println(err)
 		}
 
-		log.Println("[DEBUG] Parameters: ", parameters)
-		err = provider.Save(parameters)
-		if err != nil {
-			log.Println(err)
-		}
 	},
 }

@@ -36,7 +36,7 @@ func ReadConfig(configFilePath string) {
 		err := viper.ReadInConfig() // Find and read the config file
 		if err != nil {
 			log.Println("Problem on ReadInConfig") // Handle errors reading the config file
-			log.Println(err)
+			log.Fatalln(err)
 		}
 		err = viper.MergeInConfig()
 		if err != nil {

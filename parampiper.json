@@ -1,32 +1,10 @@
-[
-    {
-        "name": "resource_group_name",
-        "value": "testing",
-        "info": ""
-    },
-    {
-        "name": "location",
-        "value": "westeurope",
-        "info": ""
-    },
-    {
-        "name": "testing",
-        "value": "testValue",
-        "info": ""
-    },
-    {
-        "name": "t4",
-        "value": "value4",
-        "info": ""
-    },
-    {
-        "name": "t2",
-        "value": "t2",
-        "info": ""
-    },
-    {
-        "name": "t3",
-        "value": "t3",
-        "info": ""
-    }
-]
+{
+    "version": "1.0",
+    "parameters": [
+        {
+            "name": "cemal",
+            "type": "basic",
+            "value": "12398423423"
+        }
+    ]
+}
